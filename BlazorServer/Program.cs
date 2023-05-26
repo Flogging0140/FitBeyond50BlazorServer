@@ -11,9 +11,16 @@ using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("CloudConnection");
+
+string? sqlServerPassword = System.Environment.GetEnvironmentVariable("SQLSERVER_PASSWORD");
+if (string.IsNullOrEmpty(sqlServerPassword))
+    throw new Exception("Was not able to find ENV variable");
+
+connectionString = connectionString.Replace("PASSWORD_HERE", sqlServerPassword);
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+    options.UseSqlServer(connectionString));
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
