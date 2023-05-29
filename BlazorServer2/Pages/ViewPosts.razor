@@ -1,0 +1,36 @@
+﻿@page "/ViewPosts"
+@using BlazorServer2.Data;
+@using BlazorServer2.Models;
+@using BlazorServer2.Pages.MiscComponents;
+@using Microsoft.EntityFrameworkCore;
+@inject ApplicationDbContext _context
+
+<div class="container">
+    @if (BlogPosts == null)
+    {
+        <p>Loading Content...</p>
+    }
+    else if (BlogPosts.Count == 0)
+    {
+        <p>There are no posts to display...</p>
+    }
+    else
+    {
+        foreach (BlogPost blogPost in BlogPosts)
+        {
+            <BlogPostDemoCreation BlogPostDemo="blogPost" />
+        }
+    }
+</div>
+
+@code {
+    public List<BlogPost> BlogPosts { get; set; } = null;
+    public string LoadingMessage { get; set; } = "Loading Posts";
+
+    protected override async Task OnInitializedAsync()
+    {
+        BlogPosts = await _context.BlogPosts.ToListAsync();
+
+        await base.OnInitializedAsync();
+    }
+}
