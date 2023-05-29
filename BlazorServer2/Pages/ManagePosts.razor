@@ -1,0 +1,43 @@
+﻿@page "/ManagePosts"
+@using BlazorServer2.Data;
+@using BlazorServer2.Models;
+@using BlazorServer2.Pages.MiscComponents;
+@attribute [Authorize]
+
+
+@*
+    /*
+    I would like to have 2 sections
+
+    1)
+        create post,
+        see real time what it will look like,
+        have iframe with that html thing?
+
+
+    2)
+        List posts, offer delete (edit later)
+
+
+    Extras:
+        Module for green checkmark on submit success,
+
+
+    */
+*@
+
+
+<EditPost PostInProgress="PostInProgress" />
+
+<br />
+
+<EditPosts />
+
+
+
+
+
+@code {
+    public BlogPost PostInProgress { get; set; } = new();
+
+}

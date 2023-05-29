@@ -11,6 +11,16 @@
                 <NavLink class="nav-item" href="" Match="NavLinkMatch.All">
                     <span class="oi oi-home" aria-hidden="true"></span> Blog Posts
                 </NavLink>
+                <AuthorizeView>
+                    <Authorized>
+                        <NavLink class="nav-item" href="/ManagePosts" Match="NavLinkMatch.All">
+                            <span class="oi oi-home" aria-hidden="true"></span> Manage Posts
+                        </NavLink>
+                    </Authorized>
+                    <NotAuthorized>
+                        <p>You're not authorized to manage posts.</p>
+                    </NotAuthorized>
+                </AuthorizeView>
                 <LoginDisplay />
             </ul>
         </div>

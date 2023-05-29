@@ -13,6 +13,7 @@ $dark: #333333;
 html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: $body-bg;
 
     .navbar-dark {
         background-color: $body-light;
@@ -192,9 +193,15 @@ a,
 }
 
 .btn-primary {
-    color: #fff;
-    background-color: #1b6ec2;
-    border-color: #1861ac;
+    color: #000;
+    background-color: $body-bg;
+    border-color: $primary;
+
+    &:hover {
+        text-decoration: underline;
+        background-color: $primary;
+        border-color: $primary;
+    }
 }
 
 .content {
