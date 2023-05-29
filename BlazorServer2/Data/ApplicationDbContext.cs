@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using BlazorServer2.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorServer2.Data
@@ -9,5 +10,8 @@ namespace BlazorServer2.Data
             : base(options)
         {
         }
+
+        public DbSet<BlogPost> BlogPosts { get; set; } = default!;
+        public DbSet<Log> Logs { get; set; } = default!;
     }
 }
