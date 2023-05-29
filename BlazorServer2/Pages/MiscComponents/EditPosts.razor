@@ -37,7 +37,7 @@
         _context.BlogPosts.Remove(blogPost);
         _context.SaveChanges();
 
-        // reload page
-        StateHasChanged();
+        // remove post from page
+        BlogPosts.Remove(blogPost);
     }
 }
