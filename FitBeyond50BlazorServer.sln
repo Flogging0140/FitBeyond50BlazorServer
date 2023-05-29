@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33627.172
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServer", "BlazorServer\BlazorServer.csproj", "{08D36F5B-2813-482F-8D69-6FE77BD874D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazorTestLoginRegisterPages2", "..\..\..\Documents\Visual Studio 2022\Programs\BlazorTestLoginRegisterPages2\BlazorTestLoginRegisterPages2\BlazorTestLoginRegisterPages2.csproj", "{505F7E9F-7A48-47F0-85A1-3401EAF93A3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08D36F5B-2813-482F-8D69-6FE77BD874D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08D36F5B-2813-482F-8D69-6FE77BD874D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08D36F5B-2813-482F-8D69-6FE77BD874D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08D36F5B-2813-482F-8D69-6FE77BD874D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{505F7E9F-7A48-47F0-85A1-3401EAF93A3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{505F7E9F-7A48-47F0-85A1-3401EAF93A3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{505F7E9F-7A48-47F0-85A1-3401EAF93A3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{505F7E9F-7A48-47F0-85A1-3401EAF93A3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
