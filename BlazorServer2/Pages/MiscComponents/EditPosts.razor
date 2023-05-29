@@ -32,6 +32,9 @@
     [Parameter]
     public List<BlogPost> BlogPosts { get; set; } = default!;
 
+    [Parameter]
+    public EventCallback<BlogPost> DeletePostCallback { get; set; }
+
     //protected override Task OnInitializedAsync()
     //{
     //    // get posts from db
@@ -40,12 +43,14 @@
     //    return base.OnInitializedAsync();
     //}
 
-    private void DeletePost(BlogPost blogPost)
+    private async Task DeletePost(BlogPost blogPost)
     {
-        _context.BlogPosts.Remove(blogPost);
-        _context.SaveChanges();
+        //_context.BlogPosts.Remove(blogPost);
+        //_context.SaveChanges();
 
-        // remove post from page
-        BlogPosts.Remove(blogPost);
+        //// remove post from page
+        //BlogPosts.Remove(blogPost);
+
+        await DeletePostCallback.InvokeAsync(blogPost);
     }
 }

@@ -32,7 +32,7 @@
 
 <br />
 
-<EditPosts BlogPosts="BlogPosts" />
+<EditPosts BlogPosts="BlogPosts" DeletePostCallback="RemovePost" />
 
 
 
@@ -66,5 +66,6 @@
         BlogPosts.Remove(blogPost);
         _context.BlogPosts.Remove(blogPost);
         _context.SaveChanges();
+        StateHasChanged();
     }
 }

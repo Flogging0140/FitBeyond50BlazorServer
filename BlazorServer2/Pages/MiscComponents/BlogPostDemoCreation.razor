@@ -4,16 +4,14 @@
 
 @* our BS jumbotron, TODO: modify later*@
 <div class="d-flex justify-content-center w-100">
-    <div class="row w-100 mt-5 mb-5">
-        <div class="col-md-8 w-100">
-            <div class="h-100 w-100 p-4 m-2 bg-light rounded-4" style="border:solid 2px; border-color:#B8CCA3;">
-                <h2>@BlogPostDemo.PostTitle</h2>
-                <p>
-                    @((MarkupString)BlogPostDemo.PostHtmlContent)
-                </p>
-                @*<button class="btn btn-outline-secondary" type="button">Expand Article</button>*@
-                @* ^^^ use JS to measure, then have smooth expand thing, or maybe css? *@
-            </div>
+    <div class="row w-100 mt-2 mb-2">
+        <div class="col-md-8 w-100 p-2 m-2 custom-boarder">
+            <h2>@BlogPostDemo.PostTitle</h2>
+            <p>
+                @((MarkupString)BlogPostDemo.PostHtmlContent)
+            </p>
+            @*<button class="btn btn-outline-secondary" type="button">Expand Article</button>*@
+            @* ^^^ use JS to measure, then have smooth expand thing, or maybe css? *@
         </div>
     </div>
 </div>
