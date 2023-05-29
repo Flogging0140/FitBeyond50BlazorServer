@@ -11993,6 +11993,7 @@ textarea.form-control-lg {
 html,
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background: #fef9f7;
 }
 html .navbar-dark,
 body .navbar-dark {
@@ -12162,9 +12163,14 @@ a,
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+  color: #000;
+  background-color: #fef9f7;
+  border-color: #B8CCA3;
+}
+.btn-primary:hover {
+  text-decoration: underline;
+  background-color: #B8CCA3;
+  border-color: #B8CCA3;
 }
 
 .content {

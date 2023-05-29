@@ -1,0 +1,134 @@
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models;
+@* TODO: Might not need bc of cascade authroize? *@
+@attribute [Authorize]
+@inject IJSRuntime JSRuntime
+@inject ApplicationDbContext _context
+
+@*
+    /*
+    would be cool here to make an API call to get some text, can be funny to display while sending or uploading post,
+    wire up _element better so modal can work in a component of its own!
+    */
+*@
+
+<dialog @ref="_element">
+    <div class="modal-dialog d-flex justify-content-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Post Upload Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @switch (PostSuccessStatus)
+                {
+                    case PostSuccess.success:
+                        <p>Finished Uploading!</p>
+                        <img width="150" src="https://em-content.zobj.net/thumbs/120/openmoji/338/check-mark_2714-fe0f.png" />
+                        break;
+
+                    case PostSuccess.fail:
+                        <p>FAILED!</p>
+                        <img width="150" src="https://em-content.zobj.net/thumbs/120/openmoji/338/cross-mark_274c.png" />
+                        break;
+                }
+            </div>
+            <div class="modal-footer">
+                <p>
+                    Will close automatically...
+                </p>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+<div class="d-flex justify-content-center w-100">
+    <div class="row w-100">
+        <div class="container">
+            <h2>Edit Blog Post</h2>
+            <EditForm Model="@PostInProgress" OnSubmit="@HandleSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <div class="input-group">
+                    <InputText id="name" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value="PostInProgress.PostTitle" />
+                </div>
+
+                <div class="input-group">
+                    <InputText id="content" class="form-control m-2 rounded-4 w-100 h-25" placeholder="Html Content" @bind-Value="PostInProgress.PostHtmlContent" />
+                </div>
+
+                <button class="btn btn-primary m-2 w-100" type="submit">Add Post ❓</button>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+<br />
+
+<BlogPostDemoCreation BlogPostDemo="PostInProgress" />
+
+@code {
+    [Parameter]
+    public BlogPost PostInProgress { get; set; } = new();
+
+    public PostSuccess PostSuccessStatus { get; set; }
+
+    public enum PostSuccess 
+    {
+        success,
+        fail
+    }
+
+    private ElementReference _element;
+
+    [Parameter]
+    public bool ShowModal { get; set; } = default!;
+
+    private async Task HandleSubmit()
+    {
+        try
+        {
+            // set date
+            PostInProgress.DateCreated = DateTime.Now;
+            PostInProgress.DateModified = DateTime.Now;
+
+            // add to db
+            _context.BlogPosts.Add(PostInProgress);
+            await _context.SaveChangesAsync();
+
+            // reset the post stuff
+            PostInProgress.PostTitle = default!;
+            PostInProgress.PostHtmlContent = default!;
+
+            // result success
+            PostSuccessStatus = PostSuccess.success;
+
+            // invoke method to open dialog
+            await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+
+            await Task.Delay(3500);
+
+            // invoke method to close dialog
+            await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+
+            // reload page, so other components can get new stuff
+            StateHasChanged();
+        }
+        catch
+        {
+            // process failed
+            PostSuccessStatus = PostSuccess.fail;
+
+            // invoke method to open dialog
+            await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+
+            await Task.Delay(3500);
+
+            // invoke method to close dialog
+            await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+        }
+    }
+}

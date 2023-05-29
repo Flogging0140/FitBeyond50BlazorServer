@@ -12,7 +12,7 @@ namespace BlazorServer2.Models
 
         //[Column(TypeName = "text")]
         [Required]
-        public string? PostHtmlContent { get; set; } = default!;
+        public string PostHtmlContent { get; set; } = default!;
         public string PostAuthor { get; set; } = "Boyd Hanel";
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
