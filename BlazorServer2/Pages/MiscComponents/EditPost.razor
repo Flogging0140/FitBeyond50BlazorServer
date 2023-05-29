@@ -57,7 +57,12 @@
                 </div>
 
                 <div class="input-group">
-                    <InputText id="content" class="form-control m-2 rounded-4 w-100 h-25" placeholder="Html Content" @bind-Value="PostInProgress.PostHtmlContent" />
+                    <InputTextArea cols="40" rows="5" 
+                        id="content" 
+                        class="form-control m-2 rounded-4 w-100 h-25" 
+                        placeholder="Html Content" 
+                        @bind-Value="PostInProgress.PostHtmlContent">
+                    </InputTextArea>
                 </div>
 
                 <button class="btn btn-primary m-2 w-100" type="submit">Add Post ❓</button>
@@ -113,9 +118,6 @@
 
             // invoke method to close dialog
             await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
-
-            // reload page, so other components can get new stuff
-            StateHasChanged();
         }
         catch
         {
@@ -130,5 +132,8 @@
             // invoke method to close dialog
             await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
         }
+
+        // reload page, so other components can get new stuff
+        StateHasChanged();
     }
 }
