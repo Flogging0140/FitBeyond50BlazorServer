@@ -1,0 +1,29 @@
+﻿<div class="spacer" />
+<div class="spacer" />
+
+<div class="container p-4 mt-5">
+    @* display all txt messages in dictionary *@
+    @foreach (KeyValuePair<string, string> messageAnswerPair in messageAnswerPairs)
+    {
+        <FakeSmsMsg SmsMessage="@(messageAnswerPair.Value)" SmsAnswer="@(messageAnswerPair.Key)" />
+    }
+</div>
+
+@code {
+    Dictionary<string, string> messageAnswerPairs = new()
+    {
+        {
+            "umm, Hello. what is this? 👀",
+            "a community-driven fitness blog created for people who want know age is not an excuse for living your life!"
+        },
+        {
+            "and, the main focus of the FitBeyond50 blog?",
+            "age does not limit you from being a better version of yourself"
+        },
+        {
+            "What is the end goal",
+            "Have a written book, guiding others to learn from what I have experienced to this point in my life"
+        }
+    };
+
+}
