@@ -1,6 +1,6 @@
 ﻿@using BlazorServer2.Data;
 @using BlazorServer2.Models;
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Author")]
 @inject ApplicationDbContext _context
 
 <div class="d-flex justify-content-center w-100">

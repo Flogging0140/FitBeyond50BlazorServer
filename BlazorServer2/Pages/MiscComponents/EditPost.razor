@@ -1,7 +1,7 @@
 ﻿@using BlazorServer2.Data;
 @using BlazorServer2.Models;
 @* TODO: Might not need bc of cascade authroize? *@
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Author")]
 @inject IJSRuntime JSRuntime
 @inject ApplicationDbContext _context
 
