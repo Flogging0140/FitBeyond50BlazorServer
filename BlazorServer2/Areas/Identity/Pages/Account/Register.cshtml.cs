@@ -126,12 +126,15 @@ namespace BlazorServer2.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     // create roles for user
-                    if (await _roleManager.RoleExistsAsync("Author") == false)
-                        await _roleManager.CreateAsync(new IdentityRole("Author"));
+
+                    // DO NOT UNCOMMENT THIS
+                    //if (await _roleManager.RoleExistsAsync("Author") == false)
+                    //    await _roleManager.CreateAsync(new IdentityRole("Author"));
 
                     if (await _roleManager.RoleExistsAsync("RegularUser") == false)
                         await _roleManager.CreateAsync(new IdentityRole("RegularUser"));
 
+                    // add roles to user
                     await _userManager.AddToRoleAsync(user, "Author");
 
 
