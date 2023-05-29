@@ -6,31 +6,39 @@
 <div class="d-flex justify-content-center w-100">
     <div class="row w-100">
         <div class="container">
-            <h2>Delete Posts</h2>
-            <small>Edit coming soon</small>
-            @foreach (BlogPost post in BlogPosts)
+            @if (BlogPosts == null)
             {
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title">@post.PostTitle</h5>
-                        <button class="btn btn-danger" @onclick="(() => DeletePost(post))">Delete Post</button>
+                <p>Either empty or just loading...</p>
+            }
+            else
+            {
+                <h2>Delete Posts</h2>
+                <small>Edit coming soon</small>
+                @foreach (BlogPost post in BlogPosts)
+                {
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@post.PostTitle</h5>
+                            <button class="btn btn-danger" @onclick="(() => DeletePost(post))">Delete Post</button>
+                        </div>
                     </div>
-                </div>
+                }
             }
         </div>
     </div>
 </div>
 
 @code {
+    [Parameter]
     public List<BlogPost> BlogPosts { get; set; } = default!;
 
-    protected override Task OnInitializedAsync()
-    {
-        // get posts from db
-        BlogPosts = _context.BlogPosts.ToList();
+    //protected override Task OnInitializedAsync()
+    //{
+    //    // get posts from db
+    //    BlogPosts = _context.BlogPosts.ToList();
 
-        return base.OnInitializedAsync();
-    }
+    //    return base.OnInitializedAsync();
+    //}
 
     private void DeletePost(BlogPost blogPost)
     {

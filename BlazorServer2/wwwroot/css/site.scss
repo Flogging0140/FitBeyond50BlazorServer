@@ -202,6 +202,13 @@ a,
         background-color: $primary;
         border-color: $primary;
     }
+
+
+    &:focus {
+        text-decoration: underline;
+        background-color: $primary;
+        border-color: $primary;
+    }
 }
 
 .text-primary-custom {

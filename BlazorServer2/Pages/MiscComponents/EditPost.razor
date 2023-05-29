@@ -4,6 +4,7 @@
 @attribute [Authorize(Roles = "Author")]
 @inject IJSRuntime JSRuntime
 @inject ApplicationDbContext _context
+@inject NavigationManager _navigationManager
 
 @*
     /*
@@ -67,17 +68,20 @@
 
                 <button class="btn btn-primary m-2 w-100" type="submit">Add Post ❓</button>
             </EditForm>
+
+            <button class="btn btn-primary" @onclick=RefreshInputs>Refresh Controls</button>
         </div>
     </div>
 </div>
 
 <br />
 
+@* show the blog post that is being created *@
 <BlogPostDemoCreation BlogPostDemo="PostInProgress" />
 
 @code {
     [Parameter]
-    public BlogPost PostInProgress { get; set; } = new();
+    public BlogPost PostInProgress { get; set; } = default!;
 
     public PostSuccess PostSuccessStatus { get; set; }
 
@@ -92,6 +96,16 @@
     [Parameter]
     public bool ShowModal { get; set; } = default!;
 
+    [Parameter]
+    public EventCallback RefreshPostsCall { get; set; }
+
+    private void RefreshInputs()
+    {
+        // clear the post in progress
+        PostInProgress.PostTitle = default!;
+        PostInProgress.PostHtmlContent = default!;
+    }
+
     private async Task HandleSubmit()
     {
         try
@@ -105,8 +119,11 @@
             await _context.SaveChangesAsync();
 
             // reset the post stuff
-            PostInProgress.PostTitle = default!;
-            PostInProgress.PostHtmlContent = default!;
+            //PostInProgress.PostTitle = default!;
+            //PostInProgress.PostHtmlContent = default!;
+
+            // new instance of post
+            //PostInProgress = new();
 
             // result success
             PostSuccessStatus = PostSuccess.success;
@@ -133,7 +150,9 @@
             await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
         }
 
+        await Task.Delay(500);
+
         // reload page, so other components can get new stuff
-        StateHasChanged();
+        await RefreshPostsCall.InvokeAsync();
     }
 }
