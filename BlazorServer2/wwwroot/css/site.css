@@ -12173,6 +12173,19 @@ a,
   border-color: #B8CCA3;
 }
 
+.text-primary-custom {
+  color: #B8CCA3;
+}
+
+a {
+  text-decoration: none;
+  color: #B8CCA3;
+}
+a:hover {
+  text-decoration: underline;
+  color: #B8CCA3;
+}
+
 .content {
   padding-top: 1.1rem;
 }

@@ -204,6 +204,20 @@ a,
     }
 }
 
+.text-primary-custom {
+    color: $primary;
+}
+
+a {
+    text-decoration: none;
+    color: $primary;
+
+    &:hover {
+        text-decoration: underline;
+        color: $primary;
+    }
+}
+
 .content {
     padding-top: 1.1rem;
 }
