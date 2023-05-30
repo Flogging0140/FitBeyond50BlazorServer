@@ -1,3 +1,4 @@
+using BlazorServer2;
 using BlazorServer2.Areas.Identity;
 using BlazorServer2.Data;
 using Microsoft.AspNetCore.Components;
@@ -5,6 +6,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +30,19 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.Sign
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+
+// email
+
+builder.Services.AddTransient<IEmailSender, MailKitSender>();
+builder.Services.Configure<MailKitEmailSenderOptions>(options =>
+{
+    options.Host_Address = "smtp-relay.sendinblue.com";
+    options.Host_Port = 587;
+    options.Host_Username = "paulsonhanel@gmail.com";
+    options.Host_Password = "Rk8FzbSaLwsEXyft";
+    options.Sender_EMail = "apexpredator359@gmx.com";
+    options.Sender_Name = "test sender";
+});
 
 var app = builder.Build();
 
