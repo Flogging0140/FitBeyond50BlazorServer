@@ -41,15 +41,6 @@ body {
         background: linear-gradient(172deg, rgba(51, 51, 51, 1) 54%, rgba(184, 204, 163, 1) 100%);
     }
 
-    //
-    /* .nav-item {
-        @extend .nav-item;
-        color: pink;
-        text-decoration: none;
-
-
-    } */
-
     a {
         text-decoration: none;
         color: $primary;
@@ -64,7 +55,6 @@ body {
             color: $primary;
         }
     }
-
 
     .myBodyText {
         font-size: $font-size-lg;
@@ -100,39 +90,6 @@ body {
         }
     }
 
-    // Stuff for fake SMS messages
-    /* .sms-container {
-        width: 100%;
-        height: 100%;
-        position: relative;
-        display: flex;
-        background: grey;
-        padding-bottom: 10%;
-
-        .sms-message-send {
-            width: 100%;
-            height: 100%;
-        }
-
-        .sms-message-recieve {
-            width: auto;
-            height: 40px;
-            padding: 2%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            margin-left: -5%;
-            margin-top: -2%;
-            border-radius: 40%;
-            background: yellowgreen;
-            // center text
-            justify-content: center;
-            align-content: center;
-            text-align: center;
-        }
-    } */
-
-
 }
 
 // extra styles
@@ -140,10 +97,6 @@ body {
     margin-top: 15vh;
     margin-bottom: 15vh;
 }
-
-
-
-// Default stuff
 
 h1:focus {
     outline: none;
