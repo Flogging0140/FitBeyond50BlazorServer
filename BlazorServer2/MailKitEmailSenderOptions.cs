@@ -120,7 +120,7 @@ namespace BlazorServer2
             string pathRoot = _enviroment.ContentRootPath;
             string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
             var owners = System.IO.File.ReadAllLines(fullPath);
-            return string.Join(Environment.NewLine, owners);
+            return string.Join(/*Environment.NewLine*/"", owners);
         }
 
         // get html to show shared post, customize the same html
