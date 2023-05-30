@@ -1,6 +1,9 @@
 ﻿@using BlazorServer2.Data;
 @using BlazorServer2.Models;
+@using BlazorServer2.Models.DTOs;
+@using Microsoft.AspNetCore.Identity.UI.Services;
 @inject ApplicationDbContext _context
+
 
 @* our BS jumbotron, TODO: modify later*@
 <div class="concontainer-fluid d-flex justify-content-center w-100 m-4 text-center">
@@ -8,7 +11,7 @@
         <div class="d-flex justify-content-center row w-100 border-bottom">
             <div class="col-sm-12 w-100 p-2">
                 <small>
-                    Author: @BlogPostDemo.PostAuthor Written: @BlogPostDemo.DateCreated.Date
+                    Author: @BlogPostDemo.PostAuthor Written: @BlogPostDemo.DateCreated.ToShortDateString()
                 </small>
             </div>
         </div>
@@ -21,7 +24,11 @@
                 @*<button class="btn btn-outline-secondary" type="button">Expand Article</button>*@
                 @* ^^^ use JS to measure, then have smooth expand thing, or maybe css? *@
             </div>
-
+        </div>
+        <div class="d-flex justify-content-center row w-100 mt-2 mb-2 border-top">
+            <SharePostEmail 
+                HtmlContent="@BlogPostDemo.PostHtmlContent" 
+                HeaderSubject="@BlogPostDemo.PostTitle" />
         </div>
     </div>
 </div>
