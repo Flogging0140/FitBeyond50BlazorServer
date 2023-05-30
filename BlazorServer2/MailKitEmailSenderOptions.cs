@@ -81,7 +81,6 @@ namespace BlazorServer2
             {
                 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 httpClient.DefaultRequestHeaders.Add("api-key", apiKey);
-                //httpClient.DefaultRequestHeaders.Add("", Options.Host_Password);
                 var response = await httpClient.PostAsync("https://api.brevo.com/v3/smtp/email", content);
 
                 response.EnsureSuccessStatusCode();
@@ -117,8 +116,10 @@ namespace BlazorServer2
         // read out the html into lines
         private string ReadoutHtml()
         {
+            return "test email";
+
             string pathRoot = _enviroment.ContentRootPath;
-            string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
+            string fullPath = System.IO.Path.Combine(pathRoot, "Data\\HtmlSubscribedTemplate.html");
             var owners = System.IO.File.ReadAllLines(fullPath);
             return string.Join(/*Environment.NewLine*/"", owners);
         }

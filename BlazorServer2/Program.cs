@@ -46,7 +46,8 @@ builder.Services.AddCors(options =>
             policy.WithOrigins("smtp-relay.sendinblue.com",
                                 "https://api.brevo.com",
                                 "https://smtp-relay.sendinblue.com",
-                                "https://fitbeyond50.ca/");
+                                "https://fitbeyond50.ca/",
+                                "https://api.brevo.com/v3/smtp/email");
         });
 });
 
