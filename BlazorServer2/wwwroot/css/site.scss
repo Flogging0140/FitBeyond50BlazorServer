@@ -132,10 +132,10 @@ h1:focus {
     border-style: solid; */
     //random(11) + 4)
     //border-image: linear-gradient(#323232, #f3efd6);
-    border-color: #323232;
-    border-width: 2px;
+    border-color: $dark;
+    border-width: 1px;
     border-style: solid;
-    border-radius: 15px;
+    border-radius: 10px;
     //border-radius: 50px;
 }
 
