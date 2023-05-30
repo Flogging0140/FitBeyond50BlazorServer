@@ -41,10 +41,30 @@ body {
         background: linear-gradient(172deg, rgba(51, 51, 51, 1) 54%, rgba(184, 204, 163, 1) 100%);
     }
 
-    .spacer {
-        margin-top: 15vh;
-        margin-bottom: 15vh;
+    //
+    /* .nav-item {
+        @extend .nav-item;
+        color: pink;
+        text-decoration: none;
+
+
+    } */
+
+    a {
+        text-decoration: none;
+        color: $primary;
+
+        &:hover {
+            text-decoration: underline;
+            color: $primary;
+        }
+
+        &:focus {
+            text-decoration: underline;
+            color: $primary;
+        }
     }
+
 
     .myBodyText {
         font-size: $font-size-lg;
@@ -81,7 +101,7 @@ body {
     }
 
     // Stuff for fake SMS messages
-    .sms-container {
+    /* .sms-container {
         width: 100%;
         height: 100%;
         position: relative;
@@ -110,94 +130,16 @@ body {
             align-content: center;
             text-align: center;
         }
-    }
+    } */
 
-    // text stuff
-    section {
-        //max-width: auto;
-        margin: 50px auto;
-    }
 
-    section div {
-        max-width: 255px;
-        word-wrap: break-word;
-        margin-bottom: 20px;
-        line-height: 24px;
-    }
-
-    .clear {
-        clear: both;
-    }
-
-    .from-me {
-        position: relative;
-        padding: 10px 20px;
-        color: white;
-        background: $primary;
-        border-radius: 25px;
-        float: right;
-    }
-
-    .from-me:before {
-        content: "";
-        position: absolute;
-        z-index: 1;
-        bottom: -2px;
-        right: -7px;
-        height: 20px;
-        border-right: 20px solid $primary;
-        border-bottom-left-radius: 16px 14px;
-        transform: translate(0, -2px);
-    }
-
-    .from-me:after {
-        content: "";
-        position: absolute;
-        z-index: 1;
-        bottom: -2px;
-        right: -56px;
-        width: 26px;
-        height: 20px;
-        background: #f8f5e9;
-        border-bottom-left-radius: 10px;
-        transform: translate(-30px, -2px);
-    }
-
-    .from-them {
-        position: relative;
-        padding: 10px 20px;
-        background: #E5E5EA;
-        border-radius: 25px;
-        color: black;
-        float: left;
-    }
-
-    .from-them:before {
-        content: "";
-        position: absolute;
-        z-index: 2;
-        bottom: -2px;
-        left: -7px;
-        height: 20px;
-        border-left: 20px solid #E5E5EA;
-        border-bottom-right-radius: 16px 14px;
-        transform: translate(0, -2px);
-    }
-
-    .from-them:after {
-        content: "";
-        position: absolute;
-        z-index: 3;
-        bottom: -2px;
-        left: 4px;
-        width: 26px;
-        height: 20px;
-        background: #f8f5e9;
-        border-bottom-right-radius: 10px;
-        transform: translate(-30px, -2px);
-    }
 }
 
+// extra styles
+.spacer {
+    margin-top: 15vh;
+    margin-bottom: 15vh;
+}
 
 
 
@@ -207,10 +149,10 @@ h1:focus {
     outline: none;
 }
 
-a,
+/* a,
 .btn-link {
     color: #0071c1;
-}
+} */
 
 .btn-primary {
     color: #000;
@@ -248,15 +190,7 @@ a,
     color: $primary;
 }
 
-a {
-    text-decoration: none;
-    color: $primary;
 
-    &:hover {
-        text-decoration: underline;
-        color: $primary;
-    }
-}
 
 .bg-custom {
     background-color: $primary;
