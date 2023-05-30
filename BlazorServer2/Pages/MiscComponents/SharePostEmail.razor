@@ -31,9 +31,10 @@
         {
             await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, MailKitSender.EmailType.sharePost);
         }
-        catch
+        catch (Exception ex)
         {
             // just ignore in case some issue where they give bad email
+            throw new Exception(ex.Message);
         }
     }
 
