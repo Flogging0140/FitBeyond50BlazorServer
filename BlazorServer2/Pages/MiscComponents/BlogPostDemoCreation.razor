@@ -1,5 +1,6 @@
 ﻿@using BlazorServer2.Data;
 @using BlazorServer2.Models;
+@using BlazorServer2.Models.DTOs;
 @using Microsoft.AspNetCore.Identity.UI.Services;
 @inject ApplicationDbContext _context
 @inject IEmailSender _emailSender
@@ -27,11 +28,16 @@
         <div class="d-flex justify-content-center row w-100 mt-2 mb-2 border-top">
             <div class="col-sm-12 w-100 p-2 m-2">
                 <h4>Email list</h4>
-                <EditForm Model="SubscriberEmailAddress">
-                    <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value=SubscriberEmailAddress />
-                    <button @onclick="()=>Send(SubscriberEmailAddress)" class="btn btn-outline-secondary" type="button">Subscribe</button>
-                </EditForm>
+                <div hidden="@(!HideLabel)">
+                    <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
 
+                        <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value=EmailAddressDTO.EmailAddress />
+                        <button class="btn btn-outline-secondary" type="button">Email This Post!</button>
+                    </EditForm>
+                </div>
+                <button @onclick="()=>ToggleSubscribeShow()">📨</button>
             </div>
         </div>
     </div>
@@ -40,11 +46,16 @@
 @code {
     [Parameter]
     public BlogPost BlogPostDemo { get; set; } = default!;
-    public string SubscriberEmailAddress { get; set; } = "paulson.hanel@mymhc.ca";
+    //public string SubscriberEmailAddress { get; set; } = "paulson.hanel@mymhc.ca";
+    public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
+    public bool HideLabel { get; set; }
 
     public async Task Send(string toAddress)
     {
         var subject = "Fit Beyond 50, Subscribed!";
         await _emailSender.SendEmailAsync(toAddress, subject, string.Empty);
     }
+
+    public void ToggleSubscribeShow()
+        => HideLabel = !HideLabel;
 }
