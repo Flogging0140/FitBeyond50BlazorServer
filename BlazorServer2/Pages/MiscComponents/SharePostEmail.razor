@@ -1,0 +1,40 @@
+﻿@using BlazorServer2.Models.DTOs;
+@inject MailKitSender _emailSender
+
+<div class="col-sm-12 w-100 p-2 m-2">
+    <h4>Email list</h4>
+    <div hidden="@(!HideLabel)">
+        <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Email Address" @bind-Value=EmailAddressDTO.EmailAddress />
+            <button class="btn btn-outline-secondary" type="submit">Email This Post!</button>
+        </EditForm>
+    </div>
+    <button @onclick="()=>ToggleSubscribeShow()">📨</button>
+</div>
+
+@code {
+    [Parameter]
+    public string HtmlContent { get; set; } = default!;
+
+    public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
+    public bool HideLabel { get; set; }
+
+    public async Task Send(string toAddress)
+    {
+        try
+        {
+            var subject = "Fit Beyond 50, Subscribed!";
+            await _emailSender.SendEmailAsync(toAddress, subject, HtmlContent, MailKitSender.EmailType.sharePost);
+        }
+        catch
+        {
+            // just ignore in case some issue where they give bad email
+        }
+    }
+
+    public void ToggleSubscribeShow()
+        => HideLabel = !HideLabel;
+}
