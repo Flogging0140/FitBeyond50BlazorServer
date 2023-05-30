@@ -11990,6 +11990,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.body-bg-custom {
+  background-color: rgb(255, 244, 228);
+}
+
 html,
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
