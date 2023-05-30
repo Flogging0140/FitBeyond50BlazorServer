@@ -1,18 +1,17 @@
 ﻿@using BlazorServer2.Models.DTOs;
 @inject MailKitSender _emailSender
 
-<div class="col-sm-12 w-100 p-2 m-2">
-    <h4>Email list</h4>
-    <div hidden="@(!HideLabel)">
+<div class="w-100 p-2 m-2">
+    <div class="text-center" hidden="@(!HideLabel)">
         <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
-            <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Email Address" @bind-Value=EmailAddressDTO.EmailAddress />
-            <button class="btn btn-outline-secondary" type="submit">Email This Post!</button>
+            <InputText id="emailSend" class="w-100 form-control m-2 rounded-4" placeholder="Email Address" @bind-Value=EmailAddressDTO.EmailAddress />
+            <button class="btn btn-primary w-100 m-2" type="submit">Email This Post!</button>
         </EditForm>
     </div>
-    <button @onclick="()=>ToggleSubscribeShow()">📨</button>
+    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">📨</button>
 </div>
 
 @code {

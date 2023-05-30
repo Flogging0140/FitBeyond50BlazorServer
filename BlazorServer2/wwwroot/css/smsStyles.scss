@@ -1,0 +1,101 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Life+Savers&family=Nanum+Myeongjo&display=swap');
+@import "./scss/bootstrap";
+
+$body-bg: #E5E5EA;
+$body-light: #89827e;
+$back-gradient: linear-gradient(174.2deg, rgba(255, 244, 228, 1) 7.1%, rgba(240, 246, 238, 1) 67.4%);
+
+$primary: #B8CCA3;
+$danger: #723D46;
+$info: #0074d9;
+$light: #EAE0D5;
+$dark: #333333;
+
+$header-font: 'Life Savers', cursive;
+$body-font: 'Nanum Myeongjo', serif;
+
+// text stuff
+section {
+    //max-width: auto;
+    margin: 50px auto;
+}
+
+section div {
+    max-width: 255px;
+    word-wrap: break-word;
+    margin-bottom: 20px;
+    line-height: 24px;
+}
+
+.clear {
+    clear: both;
+}
+
+.from-me {
+    position: relative;
+    padding: 10px 20px;
+    color: white;
+    background: $primary;
+    border-radius: 25px;
+    float: right;
+}
+
+.from-me:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    right: -7px;
+    height: 20px;
+    border-right: 20px solid $primary;
+    border-bottom-left-radius: 16px 14px;
+    transform: translate(0, -2px);
+}
+
+.from-me:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    bottom: -2px;
+    right: -56px;
+    width: 26px;
+    height: 20px;
+    background: #f8f5e9;
+    border-bottom-left-radius: 10px;
+    transform: translate(-30px, -2px);
+}
+
+.from-them {
+    position: relative;
+    padding: 10px 20px;
+    background: #E5E5EA;
+    border-radius: 25px;
+    color: black;
+    float: left;
+}
+
+.from-them:before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    bottom: -2px;
+    left: -7px;
+    height: 20px;
+    border-left: 20px solid #E5E5EA;
+    border-bottom-right-radius: 16px 14px;
+    transform: translate(0, -2px);
+}
+
+.from-them:after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    bottom: -2px;
+    left: 4px;
+    width: 26px;
+    height: 20px;
+    background: #f8f5e9;
+    border-bottom-right-radius: 10px;
+    transform: translate(-30px, -2px);
+}

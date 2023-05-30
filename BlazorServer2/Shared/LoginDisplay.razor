@@ -1,12 +1,19 @@
 ﻿<AuthorizeView>
     <Authorized>
-        <p class="text-primary-custom" href="Identity/Account/Manage">Hello, @context.User.Identity?.Name!</p>
+        <span class="text-primary-custom">Hello, @context.User.Identity?.Name!</span>
+        @*<p class="text-primary-custom oi n" href="Identity/Account/Manage"></p>*@
         <form method="post" action="Identity/Account/LogOut">
-            <button type="submit" class="nav-link btn btn-link">Log out</button>
+            <button type="submit" class="nav-link text-primary-custom">Log out</button>
         </form>
     </Authorized>
     <NotAuthorized>
-        <a href="Identity/Account/Register">Register</a>
-        <a href="Identity/Account/Login">Log in</a>
+        <NavLink class="nav-item" href="Identity/Account/Register" Match="NavLinkMatch.All">
+            <span class="oi oi-arrow-circle-top" aria-hidden="true"></span> Register
+        </NavLink>
+        @*<a class="oi oi-accordion-item" href="Identity/Account/Register">Register</a>*@
+        <NavLink class="nav-item" href="Identity/Account/Login" Match="NavLinkMatch.All">
+            <span class="oi oi-account-login" aria-hidden="true"></span> Login
+        </NavLink>
+        @*<a class="oi oi-account-login" href="Identity/Account/Login">Log in</a>*@
     </NotAuthorized>
 </AuthorizeView>
