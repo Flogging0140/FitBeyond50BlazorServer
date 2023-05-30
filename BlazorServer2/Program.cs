@@ -33,7 +33,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuth
 
 // email
 
-builder.Services.AddTransient<IEmailSender, MailKitSender>();
+builder.Services.AddTransient<MailKitSender>();
 builder.Services.Configure<MailKitEmailSenderOptions>(options =>
 {
     options.Host_Address = "smtp-relay.sendinblue.com";

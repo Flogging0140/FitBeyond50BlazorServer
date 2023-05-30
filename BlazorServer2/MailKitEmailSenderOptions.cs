@@ -7,7 +7,7 @@ using MailKit.Net.Smtp;
 
 namespace BlazorServer2
 {
-    public class MailKitSender : IEmailSender
+    public class MailKitSender/* : IEmailSender*/
     {
         private readonly Microsoft.Extensions.Hosting.IHostEnvironment _enviroment;
 
@@ -30,6 +30,11 @@ namespace BlazorServer2
         {
             return Execute(email, subject, message, emailType);
         }
+
+        //public Task SendEmailAsync(string email, string subject, string message)
+        //{
+        //    return Execute(email, subject, message, emailType);
+        //}
 
         public Task Execute(string to, string subject, string message, EmailType emailType)
         {
@@ -63,50 +68,26 @@ namespace BlazorServer2
             return Task.FromResult(true);
         }
 
-        // get html to show shared post, customize the same html
-        private string GetSharedPosHtml(string postHtmlContent)
+        // read out the html into lines
+        private string ReadoutHtml()
         {
             string pathRoot = _enviroment.ContentRootPath;
             string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
             var owners = System.IO.File.ReadAllLines(fullPath);
-
-            string retMessage = string.Join(Environment.NewLine, owners);
-
-            // replace "TEXT_HERE" with message we want
-            retMessage = retMessage.Replace("TEXT_HERE", postHtmlContent);
-
-            return retMessage;
+            return string.Join(Environment.NewLine, owners);
         }
+
+        // get html to show shared post, customize the same html
+        private string GetSharedPosHtml(string postHtmlContent)
+             => ReadoutHtml().Replace("TEXT_HERE", postHtmlContent);
 
         // html to show this (TODO: should probe select unsubscribed in db (bit value))
         private string GetUnSubscribedHtml()
-        {
-            string pathRoot = _enviroment.ContentRootPath;
-            string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
-            var owners = System.IO.File.ReadAllLines(fullPath);
-
-            string retMessage = string.Join(Environment.NewLine, owners);
-
-            // replace "TEXT_HERE" with message we want
-            retMessage = retMessage.Replace("TEXT_HERE", "You've been unsubscribed; hope to meet again soon!");
-
-            return retMessage;
-        }
+             => ReadoutHtml().Replace("TEXT_HERE", "You've been unsubscribed; hope to meet again soon!");
 
         // get html for subscribed person (TODO: add their email to database in new table)
         private string GetSubscribedHtml()
-        {
-            string pathRoot = _enviroment.ContentRootPath;
-            string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
-            var owners = System.IO.File.ReadAllLines(fullPath);
-
-            string retMessage = string.Join(Environment.NewLine, owners);
-
-            // replace "TEXT_HERE" with message we want
-            retMessage = retMessage.Replace("TEXT_HERE", "You have Subscribed! 🥳");
-
-            return retMessage;
-        }
+            => ReadoutHtml().Replace("TEXT_HERE", "You have Subscribed! 🥳");
     }
 
     public class MailKitEmailSenderOptions

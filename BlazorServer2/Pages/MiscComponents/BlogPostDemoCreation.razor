@@ -3,7 +3,7 @@
 @using BlazorServer2.Models.DTOs;
 @using Microsoft.AspNetCore.Identity.UI.Services;
 @inject ApplicationDbContext _context
-@inject IEmailSender _emailSender
+@inject MailKitSender _emailSender
 
 @* our BS jumbotron, TODO: modify later*@
 <div class="concontainer-fluid d-flex justify-content-center w-100 m-4 text-center">
@@ -34,7 +34,7 @@
                         <ValidationSummary />
 
                         <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value=EmailAddressDTO.EmailAddress />
-                        <button class="btn btn-outline-secondary" type="button">Email This Post!</button>
+                        <button class="btn btn-outline-secondary" type="submit">Email This Post!</button>
                     </EditForm>
                 </div>
                 <button @onclick="()=>ToggleSubscribeShow()">📨</button>
@@ -53,7 +53,7 @@
     public async Task Send(string toAddress)
     {
         var subject = "Fit Beyond 50, Subscribed!";
-        await _emailSender.SendEmailAsync(toAddress, subject, string.Empty);
+        await _emailSender.SendEmailAsync(toAddress, subject, BlogPostDemo.PostHtmlContent, MailKitSender.EmailType.sharePost);
     }
 
     public void ToggleSubscribeShow()
