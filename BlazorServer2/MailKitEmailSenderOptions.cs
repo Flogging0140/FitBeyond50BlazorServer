@@ -40,11 +40,21 @@ namespace BlazorServer2
         {
             // check type
             if (emailType == EmailType.subscribe)
+            {
                 message = GetSubscribedHtml();
+                subject = "Subscribed, FitBeyond50"; 
+            }
+
             else if (emailType == EmailType.unsubscribe)
+            {
                 message = GetUnSubscribedHtml();
+                subject = "Unsubscribed, FitBeyond50";
+            }
             else if (emailType == EmailType.sharePost)
+            {
                 message = GetSharedPosHtml(message);
+                subject = "Sharing Post, FitBeyond50";
+            }
 
             // create message
             var email = new MimeMessage();
