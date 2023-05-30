@@ -5,10 +5,13 @@
 @using Microsoft.EntityFrameworkCore;
 @inject ApplicationDbContext _context
 
-<div class="container">
+<div class="container-fluid w-100">
     @if (BlogPosts == null)
     {
-        <p>Loading Content...</p>
+        <div class="q-100 d-flex justify-content-center align-items-center align-content-center">
+            <p>Loading Content...</p>
+        </div>
+
     }
     else if (BlogPosts.Count == 0)
     {
