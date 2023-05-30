@@ -19,7 +19,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">@post.PostTitle</h5>
-                            <button class="btn btn-danger" @onclick="(() => DeletePost(post))">Delete Post</button>
+                            <button class="btn btn-danger" @onclick="(() => DeletePost(post.Id))">Delete Post</button>
                         </div>
                     </div>
                 }
@@ -33,7 +33,7 @@
     public List<BlogPost> BlogPosts { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<BlogPost> DeletePostCallback { get; set; }
+    public EventCallback<int> DeletePostCallback { get; set; }
 
     //protected override Task OnInitializedAsync()
     //{
@@ -43,7 +43,7 @@
     //    return base.OnInitializedAsync();
     //}
 
-    private async Task DeletePost(BlogPost blogPost)
+    private async Task DeletePost(int blogPostId)
     {
         //_context.BlogPosts.Remove(blogPost);
         //_context.SaveChanges();
@@ -51,6 +51,6 @@
         //// remove post from page
         //BlogPosts.Remove(blogPost);
 
-        await DeletePostCallback.InvokeAsync(blogPost);
+        await DeletePostCallback.InvokeAsync(blogPostId);
     }
 }

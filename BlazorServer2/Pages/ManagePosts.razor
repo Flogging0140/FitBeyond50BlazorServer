@@ -93,11 +93,21 @@
         StateHasChanged();
     }
 
-    private void RemovePost(BlogPost blogPost)
+    private void RemovePost(int blogPostId)
     {
-        BlogPosts.Remove(blogPost);
-        _context.BlogPosts.Remove(blogPost);
+        BlogPost? blogPostToDelete = _context.BlogPosts.ToList().Where(b => b.Id == blogPostId).FirstOrDefault();
+
+        // skip if we can't find
+        if (blogPostToDelete == null)
+            return;
+
+        // remove
+        BlogPosts.Remove(blogPostToDelete);
+        _context.BlogPosts.Remove(blogPostToDelete);
         _context.SaveChanges();
         StateHasChanged();
+
+        // clear whatever 
+        PostInProgress = new();
     }
 }
