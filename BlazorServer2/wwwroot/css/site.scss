@@ -35,6 +35,10 @@ body {
 
     font-family: $body-font;
 
+    .text-primary-custom {
+        color: $primary;
+    }
+
     .navbar-dark {
         background-color: $body-light;
         background: $dark;
@@ -162,9 +166,7 @@ h1:focus {
 
 
 
-.text-primary-custom {
-    color: $primary;
-}
+
 
 
 

@@ -12025,6 +12025,10 @@ body h6,
 body .h6 {
   font-family: "Life Savers", cursive;
 }
+html .text-primary-custom,
+body .text-primary-custom {
+  color: #B8CCA3;
+}
 html .navbar-dark,
 body .navbar-dark {
   background-color: #89827e;
@@ -12142,10 +12146,6 @@ h1:focus, .h1:focus {
 .btn-link {
     color: #0071c1;
 } */
-.text-primary-custom {
-  color: #B8CCA3;
-}
-
 .bg-custom {
   background-color: #B8CCA3;
 }
