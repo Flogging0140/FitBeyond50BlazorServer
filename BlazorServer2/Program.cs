@@ -37,6 +37,18 @@ builder.Services.AddServerSideBlazor(options =>
     options.DetailedErrors = true;
 });
 
+// add cors
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(
+        policy =>
+        {
+            policy.WithOrigins("smtp-relay.sendinblue.com",
+                                "https://api.brevo.com",
+                                "https://smtp-relay.sendinblue.com");
+        });
+});
+
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 
 // email
@@ -71,6 +83,9 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+//
+app.UseCors();
 
 app.UseAuthentication();
 app.UseAuthorization();
