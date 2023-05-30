@@ -19,6 +19,9 @@
     [Parameter]
     public string HtmlContent { get; set; } = default!;
 
+    [Parameter]
+    public string HeaderSubject { get; set; } = default!;
+
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
     public bool HideLabel { get; set; }
 
@@ -26,8 +29,7 @@
     {
         try
         {
-            var subject = "Fit Beyond 50, Subscribed!";
-            await _emailSender.SendEmailAsync(toAddress, subject, HtmlContent, MailKitSender.EmailType.sharePost);
+            await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, MailKitSender.EmailType.sharePost);
         }
         catch
         {

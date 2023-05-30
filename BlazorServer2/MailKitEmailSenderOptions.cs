@@ -52,7 +52,7 @@ namespace BlazorServer2
             }
             else if (emailType == EmailType.sharePost)
             {
-                message = GetSharedPosHtml(message);
+                message = GetSharedPosHtml(message, subject);
                 subject = "Sharing Post, FitBeyond50";
             }
 
@@ -88,16 +88,22 @@ namespace BlazorServer2
         }
 
         // get html to show shared post, customize the same html
-        private string GetSharedPosHtml(string postHtmlContent)
-             => ReadoutHtml().Replace("TEXT_HERE", postHtmlContent);
+        private string GetSharedPosHtml(string postHtmlContent, string subjectHeader)
+             => ReadoutHtml()
+            .Replace("TEXT_HERE", postHtmlContent)
+            .Replace("HEADER_HERE", subjectHeader);
 
         // html to show this (TODO: should probe select unsubscribed in db (bit value))
         private string GetUnSubscribedHtml()
-             => ReadoutHtml().Replace("TEXT_HERE", "You've been unsubscribed; hope to meet again soon!");
+             => ReadoutHtml()
+            .Replace("TEXT_HERE", "You've been unsubscribed; hope to meet again soon!")
+            .Replace("HEADER_HERE", "Unsubscribed from FitBeyond50.ca");
 
         // get html for subscribed person (TODO: add their email to database in new table)
         private string GetSubscribedHtml()
-            => ReadoutHtml().Replace("TEXT_HERE", "You have Subscribed! 🥳");
+            => ReadoutHtml()
+            .Replace("TEXT_HERE", "You have Subscribed! 🥳")
+            .Replace("HEADER_HERE", "Subscribed to FitBeyond50.ca");
     }
 
     public class MailKitEmailSenderOptions
