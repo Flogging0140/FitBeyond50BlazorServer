@@ -1,8 +1,9 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 @import "./scss/bootstrap";
 
-$body-bg: #fef9f7;
-$body-light: #ffffff;
+$body-bg: #E5E5EA;
+$body-light: #89827e;
+$back-gradient: linear-gradient(174.2deg, rgba(255, 244, 228, 1) 7.1%, rgba(240, 246, 238, 1) 67.4%);
 
 $primary: #B8CCA3;
 $danger: #723D46;
@@ -13,7 +14,8 @@ $dark: #333333;
 html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: $body-bg;
+    background: $back-gradient;
+
 
     .navbar-dark {
         background-color: $body-light;
@@ -121,7 +123,7 @@ body {
     .from-me:before {
         content: "";
         position: absolute;
-        z-index: -1;
+        z-index: 1;
         bottom: -2px;
         right: -7px;
         height: 20px;
@@ -138,7 +140,7 @@ body {
         right: -56px;
         width: 26px;
         height: 20px;
-        background: white;
+        background: #f8f5e9;
         border-bottom-left-radius: 10px;
         transform: translate(-30px, -2px);
     }
@@ -172,7 +174,7 @@ body {
         left: 4px;
         width: 26px;
         height: 20px;
-        background: white;
+        background: #f8f5e9;
         border-bottom-right-radius: 10px;
         transform: translate(-30px, -2px);
     }
@@ -202,6 +204,26 @@ a,
         background-color: $primary;
         border-color: $primary;
     }
+
+
+    &:focus {
+        text-decoration: underline;
+        background-color: $primary;
+        border-color: $primary;
+    }
+}
+
+.custom-boarder {
+    /* border-image: linear-gradient(rgba(51, 51, 51, 1) 54%, #b1ad98 100%);
+    border-width: 4px;
+    border-style: solid; */
+    //random(11) + 4)
+    //border-image: linear-gradient(#323232, #f3efd6);
+    border-color: #323232;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 15px;
+    //border-radius: 50px;
 }
 
 .text-primary-custom {
@@ -216,6 +238,10 @@ a {
         text-decoration: underline;
         color: $primary;
     }
+}
+
+.bg-custom {
+    background-color: $primary;
 }
 
 .content {

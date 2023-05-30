@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 
@@ -28,21 +29,25 @@ namespace BlazorServer2.Areas.Identity.Pages.Account
         private readonly IUserStore<IdentityUser> _userStore;
         //private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
-        private readonly IEmailSender _emailSender;
+        //private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            /*IEmailSender emailSender*/
+            RoleManager<IdentityRole> roleManager
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
             //_emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
-            _emailSender = emailSender;
+            //_emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -120,6 +125,19 @@ namespace BlazorServer2.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    // create roles for user
+
+                    // DO NOT UNCOMMENT THIS
+                    //if (await _roleManager.RoleExistsAsync("Author") == false)
+                    //    await _roleManager.CreateAsync(new IdentityRole("Author"));
+
+                    if (await _roleManager.RoleExistsAsync("RegularUser") == false)
+                        await _roleManager.CreateAsync(new IdentityRole("RegularUser"));
+
+                    // add roles to user
+                    await _userManager.AddToRoleAsync(user, "Author");
+
+
                     //_logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

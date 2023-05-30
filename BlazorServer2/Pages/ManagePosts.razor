@@ -2,7 +2,8 @@
 @using BlazorServer2.Data;
 @using BlazorServer2.Models;
 @using BlazorServer2.Pages.MiscComponents;
-@attribute [Authorize]
+@attribute [Authorize(Roles = "Author")]
+@inject ApplicationDbContext _context
 
 
 @*
@@ -27,17 +28,44 @@
 *@
 
 
-<EditPost PostInProgress="PostInProgress" />
+<EditPost PostInProgress="PostInProgress" RefreshPostsCall="LoadPosts" />
 
 <br />
 
-<EditPosts />
+<EditPosts BlogPosts="BlogPosts" DeletePostCallback="RemovePost" />
 
 
 
 
 
 @code {
+    [Parameter]
     public BlogPost PostInProgress { get; set; } = new();
 
+    public List<BlogPost> BlogPosts { get; set; } = default!;
+
+    //public EventCallback RefreshPostsCall { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        // get posts from db
+        BlogPosts = _context.BlogPosts.ToList();
+
+        return base.OnInitializedAsync();
+    }
+
+    //
+    private void LoadPosts()
+    {
+        BlogPosts = _context.BlogPosts.ToList();
+        StateHasChanged();
+    }
+
+    private void RemovePost(BlogPost blogPost)
+    {
+        BlogPosts.Remove(blogPost);
+        _context.BlogPosts.Remove(blogPost);
+        _context.SaveChanges();
+        StateHasChanged();
+    }
 }
