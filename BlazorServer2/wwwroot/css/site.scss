@@ -1,4 +1,5 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+@import url('https://fonts.googleapis.com/css2?family=Life+Savers&family=Nanum+Myeongjo&display=swap');
 @import "./scss/bootstrap";
 
 $body-bg: #E5E5EA;
@@ -11,6 +12,9 @@ $info: #0074d9;
 $light: #EAE0D5;
 $dark: #333333;
 
+$header-font: 'Life Savers', cursive;
+$body-font: 'Nanum Myeongjo', serif;
+
 .body-bg-custom {
     background-color: rgba(255, 244, 228, 1);
 }
@@ -20,6 +24,16 @@ body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background: $back-gradient;
 
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: $header-font;
+    }
+
+    font-family: $body-font;
 
     .navbar-dark {
         background-color: $body-light;

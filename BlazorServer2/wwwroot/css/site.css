@@ -1,6 +1,6 @@
 @charset "UTF-8";
 @import url("open-iconic/font/css/open-iconic-bootstrap.min.css");
-/*!
+@import url("https://fonts.googleapis.com/css2?family=Life+Savers&family=Nanum+Myeongjo&display=swap"); /*!
  * Bootstrap  v5.3.0-alpha2 (https://getbootstrap.com/)
  * Copyright 2011-2023 The Bootstrap Authors
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
@@ -11998,6 +11998,32 @@ html,
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: linear-gradient(174.2deg, rgb(255, 244, 228) 7.1%, rgb(240, 246, 238) 67.4%);
+  font-family: "Nanum Myeongjo", serif;
+}
+html h1, html .h1,
+html h2,
+html .h2,
+html h3,
+html .h3,
+html h4,
+html .h4,
+html h5,
+html .h5,
+html h6,
+html .h6,
+body h1,
+body .h1,
+body h2,
+body .h2,
+body h3,
+body .h3,
+body h4,
+body .h4,
+body h5,
+body .h5,
+body h6,
+body .h6 {
+  font-family: "Life Savers", cursive;
 }
 html .navbar-dark,
 body .navbar-dark {
