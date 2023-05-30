@@ -40,8 +40,8 @@ builder.Services.Configure<MailKitEmailSenderOptions>(options =>
     options.Host_Port = 587;
     options.Host_Username = "paulsonhanel@gmail.com";
     options.Host_Password = "Rk8FzbSaLwsEXyft";
-    options.Sender_EMail = "FitBeyond50@noreply.com";
-    options.Sender_Name = "FitBeyond50";
+    options.Sender_EMail = "bhanel@gmail.com";
+    options.Sender_Name = "FitBeyond50.ca";
 });
 
 var app = builder.Build();
