@@ -44,8 +44,7 @@
 
     public async Task Send(string toAddress)
     {
-        var subject = "sample subject";
-        var body = "sample body";
-        await _emailSender.SendEmailAsync(toAddress, subject, body);
+        var subject = "Fit Beyond 50, Subscribed!";
+        await _emailSender.SendEmailAsync(toAddress, subject, string.Empty);
     }
 }

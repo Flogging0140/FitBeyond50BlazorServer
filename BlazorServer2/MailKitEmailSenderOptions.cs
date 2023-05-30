@@ -9,9 +9,12 @@ namespace BlazorServer2
 {
     public class MailKitSender : IEmailSender
     {
-        public MailKitSender(IOptions<MailKitEmailSenderOptions> options)
+        private readonly Microsoft.Extensions.Hosting.IHostEnvironment _enviroment;
+
+        public MailKitSender(IOptions<MailKitEmailSenderOptions> options, IHostEnvironment hostEnvironment)
         {
             this.Options = options.Value;
+            this._enviroment = hostEnvironment;
         }
 
         public MailKitEmailSenderOptions Options { get; set; }
@@ -23,6 +26,9 @@ namespace BlazorServer2
 
         public Task Execute(string to, string subject, string message)
         {
+            if (string.IsNullOrEmpty(message))
+                message = GetTemplateHtml();
+
             // create message
             var email = new MimeMessage();
             email.Sender = MailboxAddress.Parse(Options.Sender_EMail);
@@ -43,6 +49,17 @@ namespace BlazorServer2
             }
 
             return Task.FromResult(true);
+        }
+
+        private string GetTemplateHtml()
+        {
+            //var owners = System.IO.File.ReadAllLines(@"..\data\Owners.txt");
+            string pathRoot = _enviroment.ContentRootPath;
+            string fullPath = System.IO.Path.Combine(pathRoot, @"Data\HtmlSubscribedTemplate.html");
+            var owners = System.IO.File.ReadAllLines(fullPath);
+            
+            string retMessage = string.Join(Environment.NewLine, owners);
+            return retMessage;
         }
     }
 
