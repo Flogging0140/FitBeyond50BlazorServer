@@ -49,7 +49,7 @@
     <div class="row w-100">
         <div class="container">
             <h2>Edit Blog Post</h2>
-            <EditForm Model="@PostInProgress" OnSubmit="@HandleSubmit">
+            <EditForm Model="@PostInProgress" OnValidSubmit="@HandleSubmit">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
