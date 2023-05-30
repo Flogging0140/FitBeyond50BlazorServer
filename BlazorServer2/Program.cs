@@ -41,7 +41,7 @@ builder.Services.Configure<MailKitEmailSenderOptions>(options =>
     options.Host_Address = "smtp-relay.sendinblue.com";
     options.Host_Port = 587;
     options.Host_Username = "paulsonhanel@gmail.com";
-    options.Host_Password = emailPassword; 
+    options.Host_Password = /*emailPassword*/"Rk8FzbSaLwsEXyft"; 
     options.Sender_EMail = "bhanel@gmail.com";
     options.Sender_Name = "FitBeyond50.ca";
 });
