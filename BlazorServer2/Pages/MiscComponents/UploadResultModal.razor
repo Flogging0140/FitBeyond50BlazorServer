@@ -1,0 +1,49 @@
+﻿<dialog @ref="_element">
+    <div class="modal-dialog d-flex justify-content-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Post Upload Status</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @switch (PostSuccessStatus)
+                {
+                    case PostSuccess.success:
+                        <p>Finished Uploading!</p>
+                        <img width="150" src="https://em-content.zobj.net/thumbs/120/openmoji/338/check-mark_2714-fe0f.png" />
+                        break;
+
+                    case PostSuccess.fail:
+                        <p>FAILED!</p>
+                        <img width="150" src="https://em-content.zobj.net/thumbs/120/openmoji/338/cross-mark_274c.png" />
+                        break;
+                }
+            </div>
+            <div class="modal-footer">
+                <p>
+                    Will close automatically...
+                </p>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+
+@code {
+    [Parameter]
+    public PostSuccess PostSuccessStatus { get; set; }
+
+    public enum PostSuccess
+    {
+        success,
+        fail
+    }
+
+    [Parameter]
+    public ElementReference _element { get; set; }
+
+    [Parameter]
+    public bool ShowModal { get; set; } = default!;
+}

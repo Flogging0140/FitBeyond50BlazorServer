@@ -2,6 +2,7 @@
 @using BlazorServer2.Data;
 @using BlazorServer2.Models;
 @using BlazorServer2.Pages.MiscComponents;
+@inject IJSRuntime JSRuntime
 @attribute [Authorize(Roles = "Author")]
 @inject ApplicationDbContext _context
 
@@ -28,7 +29,20 @@
 *@
 
 
-<EditPost PostInProgress="PostInProgress" RefreshPostsCall="LoadPosts" />
+
+
+
+
+
+
+
+
+
+
+
+<br />
+
+<EditPost PostInProgress="PostInProgress" AddPostCallback="AddPost" RefreshPostsCall="LoadPosts" />
 
 <br />
 
@@ -44,6 +58,8 @@
 
     public List<BlogPost> BlogPosts { get; set; } = default!;
 
+    public ElementReference _element { get; set; }
+
     //public EventCallback RefreshPostsCall { get; set; }
 
     protected override Task OnInitializedAsync()
@@ -54,7 +70,23 @@
         return base.OnInitializedAsync();
     }
 
-    //
+    private async Task AddPost()
+    {
+        try
+        {
+            // add to db
+            //_context.BlogPosts.Add(PostInProgress);
+            //await _context.SaveChangesAsync();
+
+            // reset the post stuff
+            //PostInProgress.PostTitle = default!;
+            //PostInProgress.PostHtmlContent = default!;
+        }
+        catch
+        {
+        }
+    }
+
     private void LoadPosts()
     {
         BlogPosts = _context.BlogPosts.ToList();

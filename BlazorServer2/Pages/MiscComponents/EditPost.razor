@@ -58,11 +58,11 @@
                 </div>
 
                 <div class="input-group">
-                    <InputTextArea cols="40" rows="5" 
-                        id="content" 
-                        class="form-control m-2 rounded-4 w-100 h-25" 
-                        placeholder="Html Content" 
-                        @bind-Value="PostInProgress.PostHtmlContent">
+                    <InputTextArea cols="40" rows="5"
+                                   id="content"
+                                   class="form-control m-2 rounded-4 w-100 h-25"
+                                   placeholder="Html Content"
+                                   @bind-Value="PostInProgress.PostHtmlContent">
                     </InputTextArea>
                 </div>
 
@@ -83,9 +83,12 @@
     [Parameter]
     public BlogPost PostInProgress { get; set; } = default!;
 
+    [Parameter]
+    public EventCallback AddPostCallback { get; set; }
+
     public PostSuccess PostSuccessStatus { get; set; }
 
-    public enum PostSuccess 
+    public enum PostSuccess
     {
         success,
         fail
@@ -110,17 +113,25 @@
     {
         try
         {
+            BlogPost postToAdd = new()
+            {
+                PostTitle = PostInProgress.PostTitle,
+                PostHtmlContent = PostInProgress.PostHtmlContent
+            };
+
             // set date
-            PostInProgress.DateCreated = DateTime.Now;
-            PostInProgress.DateModified = DateTime.Now;
+            postToAdd.DateCreated = DateTime.Now;
+            postToAdd.DateModified = DateTime.Now;
 
             // add to db
-            _context.BlogPosts.Add(PostInProgress);
+             _context.BlogPosts.Add(postToAdd);
             await _context.SaveChangesAsync();
 
             // reset the post stuff
             //PostInProgress.PostTitle = default!;
             //PostInProgress.PostHtmlContent = default!;
+
+            await AddPostCallback.InvokeAsync();
 
             // new instance of post
             //PostInProgress = new();
@@ -154,5 +165,8 @@
 
         // reload page, so other components can get new stuff
         await RefreshPostsCall.InvokeAsync();
+
+        //
+        PostInProgress = new();
     }
 }
