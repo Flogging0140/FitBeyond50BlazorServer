@@ -6,7 +6,7 @@
 
 
 @* our BS jumbotron, TODO: modify later*@
-<div class="concontainer-fluid d-flex justify-content-center w-100 m-4 text-center">
+@*<div class="concontainer-fluid d-flex justify-content-center w-100 m-4 text-center">
     <div class="p-5 m-5 w-100 body-bg-custom custom-boarder">
         <div class="d-flex justify-content-center row w-100 border-bottom">
             <div class="col-sm-12 w-100 p-2">
@@ -21,8 +21,8 @@
                 <p>
                     @((MarkupString)BlogPostDemo.PostHtmlContent)
                 </p>
-                @*<button class="btn btn-outline-secondary" type="button">Expand Article</button>*@
-                @* ^^^ use JS to measure, then have smooth expand thing, or maybe css? *@
+                <!--<button class="btn btn-outline-secondary" type="button">Expand Article</button>-->
+                <!--^^^ use JS to measure, then have smooth expand thing, or maybe css?-->
             </div>
         </div>
         <div class="d-flex justify-content-center row w-100 mt-2 mb-2 border-top">
@@ -30,6 +30,28 @@
                 HtmlContent="@BlogPostDemo.PostHtmlContent" 
                 HeaderSubject="@BlogPostDemo.PostTitle" />
         </div>
+    </div>
+</div>*@
+
+<div class="d-flex flex-column justify-content-center body-bg-custom custom-boarder p-2 m-2 w-100">
+    <div class="row w-100 border-bottom">
+        <div class="col-sm-12 w-100 p-2">
+            <small>
+                Author: @BlogPostDemo.PostAuthor Written: @BlogPostDemo.DateCreated.ToShortDateString()
+            </small>
+        </div>
+    </div>
+    <div class="row w-100 border-bottom">
+        <div class="col-sm-12 w-100 p-2 m-2">
+            <h2>@BlogPostDemo.PostTitle</h2>
+            <p>
+                @((MarkupString)BlogPostDemo.PostHtmlContent)
+            </p>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center row w-100 mt-2 mb-2 border-top">
+        @*<SharePostEmail HtmlContent="@BlogPostDemo.PostHtmlContent"
+                        HeaderSubject="@BlogPostDemo.PostTitle" />*@
     </div>
 </div>
 
