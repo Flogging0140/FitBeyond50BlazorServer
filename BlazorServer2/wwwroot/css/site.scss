@@ -90,6 +90,59 @@ body {
         }
     }
 
+    .blog-post {
+        // spacing
+        padding: 2% 5%;
+
+        // flex
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+
+        // sizing
+        width: 100%;
+        height: 100%;
+
+        // border
+        border-color: $dark;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 10px;
+
+        .txt {
+            text-align: justify;
+
+            h2 {
+                text-align: center;
+                margin: 2%;
+                padding: 2% 5%;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+        }
+    }
+
+    .btn-primary {
+        color: $dark;
+        background-color: $primary;
+        border-color: $dark;
+
+        &:hover {
+            text-decoration: underline;
+            background-color: $primary;
+            border-color: $primary;
+        }
+
+        &:focus {
+            text-decoration: underline;
+            background-color: $primary;
+            border-color: $primary;
+        }
+    }
 }
 
 // extra styles
@@ -107,37 +160,7 @@ h1:focus {
     color: #0071c1;
 } */
 
-.btn-primary {
-    color: #000;
-    background-color: $body-bg;
-    border-color: $primary;
 
-    &:hover {
-        text-decoration: underline;
-        background-color: $primary;
-        border-color: $primary;
-    }
-
-
-    &:focus {
-        text-decoration: underline;
-        background-color: $primary;
-        border-color: $primary;
-    }
-}
-
-.custom-boarder {
-    /* border-image: linear-gradient(rgba(51, 51, 51, 1) 54%, #b1ad98 100%);
-    border-width: 4px;
-    border-style: solid; */
-    //random(11) + 4)
-    //border-image: linear-gradient(#323232, #f3efd6);
-    border-color: $dark;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 10px;
-    //border-radius: 50px;
-}
 
 .text-primary-custom {
     color: $primary;
