@@ -2,7 +2,8 @@
 @import "./scss/bootstrap";
 
 $body-bg: #E5E5EA;
-$body-light: #ffffff;
+$body-light: #89827e;
+$back-gradient: linear-gradient(174.2deg, rgba(255, 244, 228, 1) 7.1%, rgba(240, 246, 238, 1) 67.4%);
 
 $primary: #B8CCA3;
 $danger: #723D46;
@@ -13,7 +14,8 @@ $dark: #333333;
 html,
 body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background: $body-light;
+    background: $back-gradient;
+
 
     .navbar-dark {
         background-color: $body-light;
