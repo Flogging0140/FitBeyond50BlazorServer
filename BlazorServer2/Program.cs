@@ -14,6 +14,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+string? emailPassword = System.Environment.GetEnvironmentVariable("SMTP_PASSWORD");
+
 string? sqlServerPassword = System.Environment.GetEnvironmentVariable("SQLSERVER_PASSWORD");
 if (string.IsNullOrEmpty(sqlServerPassword))
     throw new Exception("Was not able to find ENV variable");
@@ -39,7 +41,7 @@ builder.Services.Configure<MailKitEmailSenderOptions>(options =>
     options.Host_Address = "smtp-relay.sendinblue.com";
     options.Host_Port = 587;
     options.Host_Username = "paulsonhanel@gmail.com";
-    options.Host_Password = System.Environment.GetEnvironmentVariable("SMTP_PASSWORD"); 
+    options.Host_Password = emailPassword; 
     options.Sender_EMail = "bhanel@gmail.com";
     options.Sender_Name = "FitBeyond50.ca";
 });
