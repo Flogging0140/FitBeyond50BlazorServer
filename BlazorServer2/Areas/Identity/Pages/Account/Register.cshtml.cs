@@ -135,7 +135,7 @@ namespace BlazorServer2.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole("RegularUser"));
 
                     // add roles to user
-                    await _userManager.AddToRoleAsync(user, "Author");
+                    await _userManager.AddToRoleAsync(user, "RegularUser");
 
 
                     //_logger.LogInformation("User created a new account with password.");
