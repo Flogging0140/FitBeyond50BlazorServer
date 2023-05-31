@@ -1,9 +1,5 @@
-﻿using MailKit.Security;
-using Microsoft.AspNetCore.Identity.UI.Services;
+﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
-using MimeKit.Text;
-using MimeKit;
-using MailKit.Net.Smtp;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
