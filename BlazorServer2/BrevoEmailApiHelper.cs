@@ -17,7 +17,7 @@ namespace BlazorServer2
             postNotification
         }
 
-        // send email 
+        // send email, flexibility
         public Task SendEmailAsync(string email, string subject, string message, EmailType emailType)
             => Execute(email, subject, emailType, message);
 
