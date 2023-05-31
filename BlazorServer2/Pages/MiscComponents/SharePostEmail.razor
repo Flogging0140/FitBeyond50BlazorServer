@@ -14,6 +14,9 @@
     <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">📨</button>
 </div>
 
+@* inform user of if sent successfully *@
+<StatusModal @ref="Modal" />
+
 @code {
     [Parameter]
     public string HtmlContent { get; set; } = default!;
@@ -23,16 +26,33 @@
 
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
     
+    // for status referencing, calling directly
+    public StatusModal? Modal { get; set; } = default!;
+
     public bool HideLabel { get; set; }
 
     public async Task Send(string toAddress)
     {
         try
         {
+            // just to silence underline
+            if (Modal is null)
+                throw new Exception("Modal null");
+
+            // toggle, open modal
+            await Modal.ToggleModalShow("📫 Sent!", true);
+
             await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, BrevoEmailApiHelper.EmailType.sharePost);
+
+            // toggle, close modal
+            await Modal.ToggleModalShow(string.Empty, true);
         }
         catch (Exception ex)
         {
+            // toggle, close modal 
+            // this is altnernative to get result real time, wait for exception, obviously false
+            await Modal.ToggleModalShow(string.Empty, false);
+
             // just ignore in case some issue where they give bad email
             throw new Exception(ex.Message);
         }

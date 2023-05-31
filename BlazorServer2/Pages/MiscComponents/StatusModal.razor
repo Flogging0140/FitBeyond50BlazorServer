@@ -1,0 +1,49 @@
+﻿@inject IJSRuntime JSRuntime
+
+<dialog @ref="_element">
+    <div class="modal-dialog d-flex justify-content-center text-center" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h3 class="mb-2">@Message</h3>
+                @if (string.IsNullOrEmpty(Image) == false)
+                {
+                    <img style="width:50px;" src="@(Image)" />
+                }
+            </div>
+            <div class="modal-footer">
+                <p>
+                    Will close automatically...
+                </p>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+
+@code {
+    public string Message { get; set; } = default!;
+
+    public ElementReference _element { get; set; }
+
+    public string Image { get; set; } = string.Empty;
+
+    public async Task ToggleModalShow(string? message, bool successResult)
+    {
+        // TODO: make more versitile later
+        Image = successResult == true 
+        ? Image = "https://em-content.zobj.net/source/skype/289/check-mark_2714-fe0f.png"
+        : Image = "https://em-content.zobj.net/thumbs/120/microsoft/319/cross-mark_274c.png";
+
+        // status if null, message if not
+        Message = !string.IsNullOrEmpty(message) ? message : Message = "Status";
+
+        // trigger re-render
+        StateHasChanged();
+
+        // show modal
+        await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+
+        // wait for a bit
+        await Task.Delay(2000);
+    }
+}
