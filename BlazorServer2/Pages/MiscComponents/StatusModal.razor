@@ -1,0 +1,57 @@
+﻿@inject IJSRuntime JSRuntime
+
+<dialog @ref="_element">
+    <div class="modal-dialog d-flex justify-content-center" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Status</h5>
+            </div>
+            <div class="modal-body">
+                <h4 class="mb-2">@(string.IsNullOrEmpty(Message) == false ? Message : string.Empty)</h4>
+                @if (Success==true)
+                {
+                    <img style="width:50px;" src="https://em-content.zobj.net/source/skype/289/check-mark_2714-fe0f.png" />
+                }
+                else
+                {
+                    <img style="width:50px;" src="https://em-content.zobj.net/thumbs/120/microsoft/319/cross-mark_274c.png" />
+                }
+            </div>
+            <div class="modal-footer">
+                <p>
+                    Will close automatically...
+                </p>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+
+@code {
+    [Parameter]
+    public bool Success { get; set; }
+
+    [Parameter]
+    public string Message { get; set; } = default!;
+
+    public ElementReference _element { get; set; }
+
+    protected override void OnInitialized()
+    {
+
+        base.OnInitialized();
+    }
+
+    // bring up modal for a couple seconds
+    private async Task ShowTimed()
+    {
+        // show modal
+        await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+
+        // wait for a bit
+        await Task.Delay(2000);
+
+        // hide modal
+        await JSRuntime.InvokeVoidAsync("blazorOpenModal", _element);
+    }
+}
