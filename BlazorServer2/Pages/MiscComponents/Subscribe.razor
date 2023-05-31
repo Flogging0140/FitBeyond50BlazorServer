@@ -1,5 +1,5 @@
 ﻿@using BlazorServer2.Models.DTOs;
-@inject MailKitSender _emailSender
+@inject BrevoEmailApiHelper _emailSender
 
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
@@ -11,7 +11,7 @@
                         <ValidationSummary />
 
                         <InputText id="emailSend" class="w-100 form-control m-2 rounded-4" placeholder="Email Address" @bind-Value=EmailAddressDTO.EmailAddress />
-                        <button class="btn btn-primary w-100 m-2" type="submit">Email This Post!</button>
+                        <button class="btn btn-primary w-100 m-2" type="submit">Subscribe!</button>
                     </EditForm>
                 </div>
             </div>
@@ -38,7 +38,7 @@
     {
         try
         {
-            await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, MailKitSender.EmailType.subscribe);
+            await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, BrevoEmailApiHelper.EmailType.subscribe);
         }
         catch (Exception ex)
         {
