@@ -19,10 +19,10 @@ namespace BlazorServer2
 
         // send email 
         public Task SendEmailAsync(string email, string subject, string message, EmailType emailType)
-            => Execute(email, subject, message, emailType);
+            => Execute(email, subject, emailType, message);
 
         // choose type, send with api
-        public async Task Execute(string to, string subject, string message, EmailType emailType)
+        public async Task Execute(string to, string subject, EmailType emailType, string message = "")
         {
             // check mail type
             if (emailType == EmailType.subscribe)
