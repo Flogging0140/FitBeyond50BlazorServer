@@ -28,6 +28,8 @@
     </div>
 </div>
 
+<StatusModal @ref="Modal" />
+
 @code {
     [Parameter]
     public string HtmlContent { get; set; } = default!;
@@ -35,12 +37,19 @@
     [Parameter]
     public string HeaderSubject { get; set; } = default!;
 
+    public StatusModal? Modal { get; set; } = default!;
+
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
 
     public async Task Send(string toAddress)
     {
         try
         {
+            if (Modal is null)
+                throw new Exception("Modal null");
+
+            await Modal.ToggleModalShow("📩 Sent!", true);
+
             // send notification
             await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, BrevoEmailApiHelper.EmailType.subscribe);
 
@@ -52,6 +61,8 @@
                     HasUnsubscribed = false
                 });
             await _context.SaveChangesAsync();
+
+            await Modal.ToggleModalShow(string.Empty, true);
         }
         catch (Exception ex)
         {
