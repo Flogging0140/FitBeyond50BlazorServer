@@ -1,0 +1,53 @@
+﻿@using BlazorServer2.Models;
+
+
+@for (int p = 1; p <= BlogPosts.Count() / pageSize; p++)
+{
+    int pageId = p;
+    <button id="btn @p" type="button" @onclick="(() => HandleChangePage(pageId))">@p</button>
+    
+}
+
+<div hidden="@(HideLabel)">
+    @if (PostsToDisplay != null)
+    {
+        @foreach (BlogPost blogPost in PostsToDisplay)
+        {
+            <BlogPostDemoCreation BlogPostDemo="blogPost" />
+        }
+    }
+    else
+    {
+        <p>waiting</p>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public List<BlogPost> BlogPosts { get; set; } = default!;
+    public List<BlogPost> PostsToDisplay { get; set; } = default!;
+
+    private int pageSize = 3;
+    private int pageNumber = 1;
+
+    public bool HideLabel { get; set; }
+
+    void HandleChangePage(int p)
+    {
+        pageNumber = p;
+        var page = BlogPosts.Skip((p - 1) * pageSize).Take(pageSize);
+
+        PostsToDisplay = page.ToList();
+
+        ToggleShow();
+    }
+
+    public void ToggleShow()
+        => HideLabel = !HideLabel;
+
+    #region StackSource
+    /*
+
+    */
+    #endregion
+}

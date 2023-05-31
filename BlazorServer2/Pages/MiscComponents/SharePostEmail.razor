@@ -22,6 +22,7 @@
     public string HeaderSubject { get; set; } = default!;
 
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
+    
     public bool HideLabel { get; set; }
 
     public async Task Send(string toAddress)
