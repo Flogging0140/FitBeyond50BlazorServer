@@ -1,5 +1,8 @@
-﻿@using BlazorServer2.Models.DTOs;
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models.DTOs;
+@using BlazorServer2.Models;
 @inject BrevoEmailApiHelper _emailSender
+@inject ApplicationDbContext _context
 
 <div class="container col-xl-10 col-xxl-8 px-4 py-5">
     <div class="row align-items-center g-lg-5 py-5">
@@ -38,7 +41,17 @@
     {
         try
         {
+            // send notification
             await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, BrevoEmailApiHelper.EmailType.subscribe);
+
+            // add to subscriber list
+            _context.Subscribers.Add(new Subscriber()
+                {
+                    Email = toAddress,
+                    DateSubscribed = DateTime.Now,
+                    HasUnsubscribed = false
+                });
+            await _context.SaveChangesAsync();
         }
         catch (Exception ex)
         {

@@ -5,7 +5,7 @@
 @inject IJSRuntime JSRuntime
 @attribute [Authorize(Roles = "Author")]
 @inject ApplicationDbContext _context
-
+@inject BrevoEmailApiHelper _email
 
 @*
     /*
@@ -28,29 +28,17 @@
     */
 *@
 
+<br />
 
-
-
-
-
-
-
-
-
-
-
+<EditPost PostInProgress="PostInProgress" AddPostCallback="AddPostNotifySubscribers" RefreshPostsCall="LoadPosts" />
 
 <br />
 
-<EditPost PostInProgress="PostInProgress" AddPostCallback="AddPost" RefreshPostsCall="LoadPosts" />
+<SubscriberManager NotifySubscribers="SetNotifySubscribers" />
 
 <br />
 
 <EditPosts BlogPosts="BlogPosts" DeletePostCallback="RemovePost" />
-
-
-
-
 
 @code {
     [Parameter]
@@ -60,6 +48,10 @@
 
     public ElementReference _element { get; set; }
 
+    // to let people know of new post.
+    public bool NotifySubscribers { get; set; } = false;
+    public List<Subscriber> Subscribers { get; set; } = default!;
+
     //public EventCallback RefreshPostsCall { get; set; }
 
     protected override Task OnInitializedAsync()
@@ -67,20 +59,46 @@
         // get posts from db
         BlogPosts = _context.BlogPosts.ToList();
 
+        // get subscribers
+        Subscribers = _context.Subscribers.ToList();
+
         return base.OnInitializedAsync();
     }
 
-    private async Task AddPost()
+    private void SetNotifySubscribers(bool notify)
+        => NotifySubscribers = notify;
+
+    // doing here bc looks better when checking nofity subs
+    private async Task AddPostNotifySubscribers()
     {
         try
         {
             // add to db
-            //_context.BlogPosts.Add(PostInProgress);
-            //await _context.SaveChangesAsync();
+            _context.BlogPosts.Add(PostInProgress);
+            await _context.SaveChangesAsync();
 
-            // reset the post stuff
-            //PostInProgress.PostTitle = default!;
-            //PostInProgress.PostHtmlContent = default!;
+            // notify subscribers
+            if (NotifySubscribers == true)
+            {
+                // get all subscribers
+                List<Subscriber> subscribersToNotify = _context.Subscribers.Where(s => s.HasUnsubscribed == false).ToList();
+
+                if (subscribersToNotify.Count > 0)
+                {
+                    // send email to each
+                    foreach (Subscriber subscriber in subscribersToNotify)
+                    {
+                        try
+                        {
+                            await _email.SendEmailAsync(subscriber.Email, "Post Notification", string.Empty, BrevoEmailApiHelper.EmailType.postNotification);
+                        }
+                        catch
+                        {
+                            // TODO: log error
+                        }
+                    }
+                }
+            }
         }
         catch
         {
@@ -107,7 +125,7 @@
         _context.SaveChanges();
         StateHasChanged();
 
-        // clear whatever 
+        // clear whatever
         PostInProgress = new();
     }
 }
