@@ -62,7 +62,7 @@
             var dbAddresult = await _context.SaveChangesAsync();
 
             // Show modal, real result based on if db updated
-            await Modal.ToggleModalShow("📩 Sent!", dbAddresult > 0);
+            await Modal.ToggleModalShow("📩 Subscribed!", dbAddresult > 0);
 
             // toggle, close modal
             await Modal.ToggleModalShow(string.Empty, true);
