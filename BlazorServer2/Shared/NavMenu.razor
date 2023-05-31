@@ -14,7 +14,7 @@
                 <NavLink class="nav-item" href="/ViewPosts" Match="NavLinkMatch.All">
                     <span class="oi oi-info" aria-hidden="true"></span> View Posts
                 </NavLink>
-                <AuthorizeView>
+                <AuthorizeView Roles="Author">
                     <Authorized>
                         <NavLink class="nav-item" href="/ManagePosts" Match="NavLinkMatch.All">
                             <span class="oi oi-hard-drive" aria-hidden="true"></span> Manage Posts
