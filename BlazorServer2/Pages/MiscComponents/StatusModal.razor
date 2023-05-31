@@ -46,4 +46,62 @@
         // wait for a bit
         await Task.Delay(2000);
     }
+
+    #region StackSource
+    /*
+        81
+
+    First you need to capture a reference of your child component:
+
+    <ChildComponent @ref="child" />
+    Then you can use this reference to call the child's component methods as you do in your code.
+
+    <button onClick="@ShowModal">show modal</button>
+
+    @code{
+    ChildComponent child;
+
+    void ShowModal(){
+    child.Show();
+        }
+    }
+    The namespace of your component need to be added by a using either in the page or in _Imports.razor. If your component is in the sub folder Components/ChildComponent.razor then its namespace is {YourAppNameSpace}.Components
+
+    @using MyBlazorApp.Components
+    read the code
+
+    Share
+    Edit
+    Follow
+    edited Feb 17 at 11:34
+    answered Feb 3, 2020 at 15:27
+    agua from mars's user avatar
+     agua from mars
+    */
+    #endregion
+
+    #region MsDocsSource
+    /* 
+     * Link: https://learn.microsoft.com/en-us/aspnet/core/blazor/components/?view=aspnetcore-7.0#capture-references-to-components
+     * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    The following lambda approach uses the preceding ReferenceChild component.
+
+    Pages/ReferenceParent1.razor:
+
+    razor
+
+    Copy
+    @page "/reference-parent-1"
+
+    <button @onclick="@(() => childComponent?.ChildMethod(5))">
+    Call <code>ReferenceChild.ChildMethod</code> with an argument of 5
+    </button>
+
+    <ReferenceChild @ref="childComponent" />
+
+    @code {
+    private ReferenceChild? childComponent;
+    }
+    */
+    #endregion
 }
