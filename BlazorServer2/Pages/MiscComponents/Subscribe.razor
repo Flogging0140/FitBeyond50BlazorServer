@@ -1,38 +1,63 @@
-﻿@using BlazorServer2.Models;
-@using BlazorServer2.Models.DTOs;
+﻿@using BlazorServer2.Models.DTOs;
 @inject MailKitSender _emailSender
 
 
 
-<div class="d-flex justify-content-center row w-100 mt-2 mb-2 border-top">
-    <div class="col-sm-12 w-100 p-2 m-2">
-        <h4>Email list</h4>
-        <div hidden="@(!HideLabel)">
-            <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
 
-                <InputText id="emailSend" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value=EmailAddressDTO.EmailAddress />
-                <button class="btn btn-outline-secondary" type="submit">Email This Post!</button>
-            </EditForm>
+
+
+
+<div class="container col-xl-10 col-xxl-8 px-4 py-5">
+    <div class="row align-items-center g-lg-5 py-5">
+        <div class="col-md-10 mx-auto col-lg-5">
+            <div class="w-100 p-2 m-2">
+                <div class="text-center">
+                    <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+
+                        <InputText id="emailSend" class="w-100 form-control m-2 rounded-4" placeholder="Email Address" @bind-Value=EmailAddressDTO.EmailAddress />
+                        <button class="btn btn-primary w-100 m-2" type="submit">Email This Post!</button>
+                    </EditForm>
+                </div>
+            </div>
         </div>
-        <button @onclick="()=>ToggleSubscribeShow()">📨</button>
+        <div class="col-lg-7 text-center text-lg-start">
+            <h1 class="display-4 fw-bold lh-1 mb-3">Lets stay in touch!</h1>
+            <p class="col-lg-10 fs-4">
+                Don't miss out on the latest fitness tips, updates, and exclusive content from my blog! Join our email list, and we'll keep you in the loop with our insightful articles, as well as occasional recommendations and resources to help you in your fitness journey. Let's stay in touch and thrive together!
+            </p>
+        </div>
     </div>
 </div>
 
+
+
+
+
+
+
+
+
 @code {
     [Parameter]
-    public BlogPost BlogPostDemo { get; set; } = default!;
-    //public string SubscriberEmailAddress { get; set; } = "paulson.hanel@mymhc.ca";
+    public string HtmlContent { get; set; } = default!;
+
+    [Parameter]
+    public string HeaderSubject { get; set; } = default!;
+
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
-    public bool HideLabel { get; set; }
 
     public async Task Send(string toAddress)
     {
-        var subject = "Fit Beyond 50, Subscribed!";
-        await _emailSender.SendEmailAsync(toAddress, subject, BlogPostDemo.PostHtmlContent, MailKitSender.EmailType.sharePost);
+        try
+        {
+            await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, MailKitSender.EmailType.subscribe);
+        }
+        catch (Exception ex)
+        {
+            // just ignore in case some issue where they give bad email
+            throw new Exception(ex.Message);
+        }
     }
-
-    public void ToggleSubscribeShow()
-        => HideLabel = !HideLabel;
 }
