@@ -45,10 +45,9 @@
     {
         try
         {
+            // just to silence underline
             if (Modal is null)
                 throw new Exception("Modal null");
-
-            await Modal.ToggleModalShow("📩 Sent!", true);
 
             // send notification
             await _emailSender.SendEmailAsync(toAddress, HeaderSubject, HtmlContent, BrevoEmailApiHelper.EmailType.subscribe);
@@ -60,8 +59,12 @@
                     DateSubscribed = DateTime.Now,
                     HasUnsubscribed = false
                 });
-            await _context.SaveChangesAsync();
+            var dbAddresult = await _context.SaveChangesAsync();
 
+            // Show modal, real result based on if db updated
+            await Modal.ToggleModalShow("📩 Sent!", dbAddresult > 0);
+
+            // toggle, close modal
             await Modal.ToggleModalShow(string.Empty, true);
         }
         catch (Exception ex)
