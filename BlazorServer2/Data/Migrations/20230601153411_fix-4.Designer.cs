@@ -4,6 +4,7 @@ using BlazorServer2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorServer2.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230601153411_fix-4")]
+    partial class fix4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -335,7 +337,7 @@ namespace BlazorServer2.Data.Migrations
             modelBuilder.Entity("BlazorServer2.Models.Comment", b =>
                 {
                     b.HasOne("BlazorServer2.Models.BlogPost", null)
-                        .WithMany("PostComments")
+                        .WithMany()
                         .HasForeignKey("BlogPostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -396,11 +398,6 @@ namespace BlazorServer2.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("BlazorServer2.Models.BlogPost", b =>
-                {
-                    b.Navigation("PostComments");
                 });
 #pragma warning restore 612, 618
         }

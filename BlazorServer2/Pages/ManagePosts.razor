@@ -30,7 +30,7 @@
 
 <br />
 
-<EditPost PostInProgress="PostInProgress" AddPostCallback="AddPostNotifySubscribers" RefreshPostsCall="LoadPosts" />
+<EditPost PostInProgress="PostInProgress" AddPostCallback="@AddPostNotifySubscribers" RefreshPostsCall="LoadPosts" />
 
 <br />
 
@@ -39,6 +39,10 @@
 <br />
 
 <EditPosts BlogPosts="BlogPosts" DeletePostCallback="RemovePost" />
+
+<br />
+
+<CommentsManagement DeleteCommentCallback="@RemoveComment" />
 
 @code {
     [Parameter]
@@ -49,7 +53,7 @@
     public ElementReference _element { get; set; }
 
     // to let people know of new post.
-    public bool NotifySubscribers { get; set; } = false;
+    public bool NotifySubscribers { get; set; } = true;
     public List<Subscriber> Subscribers { get; set; } = default!;
 
     //public EventCallback RefreshPostsCall { get; set; }
@@ -69,7 +73,7 @@
         => NotifySubscribers = notify;
 
     // doing here bc looks better when checking nofity subs
-    private async Task AddPostNotifySubscribers()
+    private async Task AddPostNotifySubscribers(BlogPost postInProgress)
     {
         try
         {
@@ -111,21 +115,44 @@
         StateHasChanged();
     }
 
-    private void RemovePost(int blogPostId)
+    private void RemovePost(BlogPost blogPost)
     {
-        BlogPost? blogPostToDelete = _context.BlogPosts.ToList().Where(b => b.Id == blogPostId).FirstOrDefault();
+        //BlogPost? blogPostToDelete = _context.BlogPosts.ToList().Where(b => b.Id == blogPostId).FirstOrDefault();
+
+        try
+        {
+            // skip if we can't find
+            if (blogPost == null)
+                return;
+
+            // remove
+            BlogPosts.Remove(blogPost);
+            _context.BlogPosts.Remove(blogPost);
+            _context.SaveChanges();
+            StateHasChanged();
+
+            // clear whatever
+            PostInProgress = new(); blogPost = new();
+        }
+        catch
+        {
+
+        }
+
+
+    }
+
+    private void RemoveComment(int commentId)
+    {
+        Comment? commentToDelete = _context.Comments.ToList().Where(c => c.Id == commentId).FirstOrDefault();
 
         // skip if we can't find
-        if (blogPostToDelete == null)
+        if (commentToDelete == null)
             return;
 
         // remove
-        BlogPosts.Remove(blogPostToDelete);
-        _context.BlogPosts.Remove(blogPostToDelete);
+        _context.Comments.Remove(commentToDelete);
         _context.SaveChanges();
         StateHasChanged();
-
-        // clear whatever
-        PostInProgress = new();
     }
 }

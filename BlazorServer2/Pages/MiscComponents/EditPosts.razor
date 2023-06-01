@@ -8,7 +8,7 @@
         <div class="container">
             @if (BlogPosts == null)
             {
-                <p>Either empty or just loading...</p>
+                <LoadingInline />
             }
             else
             {
@@ -19,7 +19,7 @@
                     <div class="card mb-3">
                         <div class="card-body">
                             <h5 class="card-title">@post.PostTitle</h5>
-                            <button class="btn btn-danger" @onclick="(() => DeletePost(post.Id))">Delete Post</button>
+                            <button class="btn btn-danger" @onclick="(() => DeletePost(post))">Delete Post</button>
                         </div>
                     </div>
                 }
@@ -33,7 +33,7 @@
     public List<BlogPost> BlogPosts { get; set; } = default!;
 
     [Parameter]
-    public EventCallback<int> DeletePostCallback { get; set; }
+    public EventCallback<BlogPost> DeletePostCallback { get; set; }
 
     //protected override Task OnInitializedAsync()
     //{
@@ -43,14 +43,22 @@
     //    return base.OnInitializedAsync();
     //}
 
-    private async Task DeletePost(int blogPostId)
+    private async Task DeletePost(BlogPost blogPost)
     {
         //_context.BlogPosts.Remove(blogPost);
         //_context.SaveChanges();
 
         //// remove post from page
         //BlogPosts.Remove(blogPost);
-
-        await DeletePostCallback.InvokeAsync(blogPostId);
+        try
+        {
+ await DeletePostCallback.InvokeAsync(blogPost);
+        }
+        catch
+        {
+            
+        }
+       
+        
     }
 }

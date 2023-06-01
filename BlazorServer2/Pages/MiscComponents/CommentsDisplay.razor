@@ -1,0 +1,86 @@
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models.DTOs;
+@using BlazorServer2.Models;
+@inject ApplicationDbContext _context
+@inject AuthenticationStateProvider _authenticationStateProvider
+@attribute [Authorize(Roles = "Author, RegularUser")]
+
+<div class="align-self-start m-1 p-1">
+    <button style="background:none;border:none;" class="text-center" @onclick="()=>ToggleCommentShow()">
+        <img style="display:block;width:35px;" src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
+    </button>
+</div>
+
+<div class="align-self-center text-center" hidden="@(!HideLabel)">
+    <div class="w-100 p-1 m-1">
+        <CommentInput BlogPostBeingAdded="@BlogPostBeingAdded" AddCommentCallback="@AddComment" />
+
+        <h2>Comments</h2>
+
+        <div>
+            @* here we are displaying them *@
+            @if (BlogPostBeingAdded.PostComments is not null)
+            {
+                @foreach (Comment comment in BlogPostBeingAdded.PostComments)
+                {
+                    <div class="w-100 text-center">
+                        <h5>@comment.email said:</h5>
+                        <p><small>@comment.Text</small></p>
+                    </div>
+                }
+            }
+            else
+            {
+                <LoadingInline />
+            }
+        </div>
+    </div>
+</div>
+
+@* inform user of if sent successfully *@
+<StatusModal @ref="Modal" />
+
+@code {
+    [Parameter]
+    public BlogPost BlogPostBeingAdded { get; set; } = default!;
+
+    //public List<Comment> CommentsToDisplay { get; set; } = default!;
+
+    // for status referencing, calling directly
+    public StatusModal? Modal { get; set; } = default!;
+
+    public bool HideLabel { get; set; }
+
+    // for getting values on component init
+    protected override Task OnInitializedAsync()
+    {
+        // populate comments
+        //CommentsToDisplay = _context.Comments.Where(c => c.BlogPostId == BlogPostBeingAdded.Id).ToList();
+
+
+        return base.OnInitializedAsync();
+    }
+
+    // add comment and refresh
+    public void AddComment(Comment comment)
+    {
+        // just to silence underline
+        if (Modal is null)
+            throw new Exception("Modal null");
+
+        // add to current display
+        //CommentsToDisplay.Add(comment);
+        BlogPostBeingAdded.PostComments.Add(comment);
+
+        // add to db, save 
+        _context.Comments.Add(comment);
+        int commentAddResult = _context.SaveChanges();
+
+        // reset UI component
+        StateHasChanged();
+    }
+
+    // hide and show div on btn click
+    public void ToggleCommentShow()
+    => HideLabel = !HideLabel;
+}

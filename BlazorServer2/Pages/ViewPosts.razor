@@ -25,7 +25,9 @@
 
     protected override async Task OnInitializedAsync()
     {
-        BlogPosts = await _context.BlogPosts.ToListAsync();
+        BlogPosts = await _context.BlogPosts
+        .Include(b => b.PostComments)
+        .OrderByDescending(b => b.DateCreated).ToListAsync();
 
         await base.OnInitializedAsync();
     }
