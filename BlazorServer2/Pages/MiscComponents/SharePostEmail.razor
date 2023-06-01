@@ -1,10 +1,11 @@
 ﻿@using BlazorServer2.Models.DTOs;
 @inject BrevoEmailApiHelper _emailSender
 
-<div class="w-100 p-2 m-2">
-    <div class="align-self-start">
-    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">📨</button>
-
+<div class="w-100">
+    <div class="align-self-start p-1 m-1">
+        <button style="width:55px;background:none;border:none;" class="text-center" @onclick="()=>ToggleSubscribeShow()">
+            <img style="display:block;width:35px;" src="https://em-content.zobj.net/thumbs/120/google/350/incoming-envelope_1f4e8.png" />
+        </button>
     </div>
 
     <div class="text-center align-self-center" hidden="@(!HideLabel)">
@@ -16,7 +17,7 @@
             <button class="btn btn-primary w-100 m-2" type="submit">Email This Post!</button>
         </EditForm>
     </div>
-    
+
 </div>
 
 @* inform user of if sent successfully *@
@@ -30,7 +31,7 @@
     public string HeaderSubject { get; set; } = default!;
 
     public EmailSubscribeDTO EmailAddressDTO { get; set; } = new() { EmailAddress = string.Empty };
-    
+
     // for status referencing, calling directly
     public StatusModal? Modal { get; set; } = default!;
 
@@ -54,7 +55,7 @@
         }
         catch (Exception ex)
         {
-            // toggle, close modal 
+            // toggle, close modal
             // this is altnernative to get result real time, wait for exception, obviously false
             await Modal.ToggleModalShow(string.Empty, false);
 

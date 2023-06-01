@@ -5,14 +5,14 @@
 @inject AuthenticationStateProvider _authenticationStateProvider
 @attribute [Authorize(Roles = "Author, RegularUser")]
 
-<div class="align-self-start m-2 p-2">
+<div class="align-self-start m-1 p-1">
     <button style="background:none;border:none;" class="text-center" @onclick="()=>ToggleCommentShow()">
-        <img style="display:block;width:50px;" src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
+        <img style="display:block;width:35px;" src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
     </button>
 </div>
 
 <div class="align-self-center text-center" hidden="@(!HideLabel)">
-    <div class="w-100 p-2 m-2">
+    <div class="w-100 p-1 m-1">
         <CommentInput BlogPostBeingAdded="@BlogPostBeingAdded" />
 
         <h2>Comments</h2>
