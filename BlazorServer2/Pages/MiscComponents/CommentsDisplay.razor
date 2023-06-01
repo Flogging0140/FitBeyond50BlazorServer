@@ -19,9 +19,9 @@
 
         <div>
             @* here we are displaying them *@
-            @if (CommentsToDisplay is not null)
+            @if (BlogPostBeingAdded.PostComments is not null)
             {
-                @foreach (Comment comment in CommentsToDisplay)
+                @foreach (Comment comment in BlogPostBeingAdded.PostComments)
                 {
                     <div class="w-100 text-center">
                         <h5>@comment.email said:</h5>
@@ -44,7 +44,7 @@
     [Parameter]
     public BlogPost BlogPostBeingAdded { get; set; } = default!;
 
-    public List<Comment> CommentsToDisplay { get; set; } = default!;
+    //public List<Comment> CommentsToDisplay { get; set; } = default!;
 
     // for status referencing, calling directly
     public StatusModal? Modal { get; set; } = default!;
@@ -55,7 +55,7 @@
     protected override Task OnInitializedAsync()
     {
         // populate comments
-        CommentsToDisplay = _context.Comments.Where(c => c.BlogPostId == BlogPostBeingAdded.Id).ToList();
+        //CommentsToDisplay = _context.Comments.Where(c => c.BlogPostId == BlogPostBeingAdded.Id).ToList();
 
 
         return base.OnInitializedAsync();
@@ -67,9 +67,10 @@
         // just to silence underline
         if (Modal is null)
             throw new Exception("Modal null");
-        
+
         // add to current display
-        CommentsToDisplay.Add(comment);
+        //CommentsToDisplay.Add(comment);
+        BlogPostBeingAdded.PostComments.Add(comment);
 
         // add to db, save 
         _context.Comments.Add(comment);
