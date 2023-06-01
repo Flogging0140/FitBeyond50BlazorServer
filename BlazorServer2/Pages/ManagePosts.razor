@@ -115,17 +115,17 @@
         StateHasChanged();
     }
 
-    private void RemovePost(int blogPostId)
+    private void RemovePost(BlogPost blogPost)
     {
-        BlogPost? blogPostToDelete = _context.BlogPosts.ToList().Where(b => b.Id == blogPostId).FirstOrDefault();
+        //BlogPost? blogPostToDelete = _context.BlogPosts.ToList().Where(b => b.Id == blogPostId).FirstOrDefault();
 
         // skip if we can't find
-        if (blogPostToDelete == null)
+        if (blogPost == null)
             return;
 
         // remove
-        BlogPosts.Remove(blogPostToDelete);
-        _context.BlogPosts.Remove(blogPostToDelete);
+        BlogPosts.Remove(blogPost);
+        _context.BlogPosts.Remove(blogPost);
         _context.SaveChanges();
         StateHasChanged();
 
