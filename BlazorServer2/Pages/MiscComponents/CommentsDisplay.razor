@@ -63,11 +63,6 @@
     // add comment and refresh
     public void AddComment(Comment comment)
     {
-        //Comment? comment = _context.Comments.Where(c => c.Id == comment).FirstOrDefault();
-        //if (comment is null)
-        //    return;
-
-        // just to silence underline
         if (Modal is null)
             throw new Exception("Modal null");
         
@@ -75,12 +70,6 @@
         _context.Comments.Add(comment);
         int commentAddResult = _context.SaveChanges();
         StateHasChanged();
-
-        // Open Modal
-        Task.Run(async () => await Modal.ToggleModalShow(commentAddResult > 0 ? "Comment Added" : "Issue Adding", commentAddResult > 0));
-
-        // Close Modal
-        //Task.Run(async () => await Modal.ToggleModalShow("Trying...", true));
     }
 
     public void ToggleCommentShow()
