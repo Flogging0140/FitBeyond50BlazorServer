@@ -13,11 +13,11 @@ namespace BlazorServer2.Pages.MiscComponents
         public List<BlogPost> PostsToDisplay { get; set; } = default!;
 
         // for sorting posts
-        public PostOrder OrderOfPosts { get; set; } = PostOrder.asc;
+        public PostOrder OrderOfPosts { get; set; } = PostOrder.oldest;
         public enum PostOrder
         {
-            asc,
-            desc
+            oldest,
+            newest
         }
 
         // change how many we want to show here, etc
@@ -40,10 +40,10 @@ namespace BlazorServer2.Pages.MiscComponents
         public void TogglePostOrder()
         {
             // toggle the sort order
-            OrderOfPosts = OrderOfPosts == PostOrder.asc ? OrderOfPosts = PostOrder.desc : OrderOfPosts = PostOrder.asc;
+            OrderOfPosts = OrderOfPosts == PostOrder.oldest ? OrderOfPosts = PostOrder.newest : OrderOfPosts = PostOrder.oldest;
 
             // order the blog posts
-            BlogPosts = OrderOfPosts == PostOrder.desc
+            BlogPosts = OrderOfPosts == PostOrder.newest
             ? BlogPosts.OrderByDescending(b => b.DateCreated).ToList()
             : BlogPosts.OrderBy(b => b.DateCreated).ToList();
 

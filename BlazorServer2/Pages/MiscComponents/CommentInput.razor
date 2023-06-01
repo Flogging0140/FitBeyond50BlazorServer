@@ -1,0 +1,84 @@
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models.DTOs;
+@using BlazorServer2.Models;
+@inject ApplicationDbContext _context
+@inject AuthenticationStateProvider _authenticationStateProvider
+@attribute [Authorize(Roles = "Author, RegularUser")]
+
+<div class="w-100 p-2 m-2">
+    <div class="text-center" hidden="@(!HideLabel)">
+        <EditForm Model="@CommentToAdd" OnValidSubmit="()=>AddComment()">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <InputText id="emailSend" class="w-100 form-control m-2 rounded-4" placeholder="Comment Here" @bind-Value=CommentToAdd.Text />
+            <button class="btn btn-primary w-100 m-2" type="submit">Add Comment!</button>
+        </EditForm>
+    </div>
+    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">
+        <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
+    </button>
+</div>
+
+@* inform user of if sent successfully *@
+<StatusModal @ref="Modal" />
+
+@code {
+    //[Parameter]
+    public Comment CommentToAdd { get; set; } = new();
+
+    // for status referencing, calling directly
+    public StatusModal? Modal { get; set; } = default!;
+
+    public bool HideLabel { get; set; }
+
+    public async Task AddComment()
+    {
+        try
+        {
+            // just to silence underline
+            if (Modal is null)
+                throw new Exception("Modal null");
+
+            // add more details to comment
+
+            var res = (await _authenticationStateProvider.GetAuthenticationStateAsync()).User;
+            CommentToAdd.email = res.Identity?.Name ?? "Anonymous";
+
+            // find user
+            var user = _context.Users.Where(u => u.UserName == CommentToAdd.email).FirstOrDefault();
+            if (user == null)
+                throw new Exception("User not found");
+
+            //
+            CommentToAdd.UserId = user.Id;
+
+            // Add comment to db
+            _context.Comments.Add(CommentToAdd);
+            int commentAddResult = await _context.SaveChangesAsync();
+
+            // toggle, decide result if more than 0 added to db, open modal
+            await Modal.ToggleModalShow(commentAddResult > 0 ? "Comment Added" : "Issue Adding", commentAddResult > 0);
+
+            // toggle, close modal
+            await Modal.ToggleModalShow(string.Empty, true);
+        }
+        catch (Exception ex)
+        {
+            if (Modal is null)
+                throw new Exception("Modal null");
+
+            await Modal.ToggleModalShow(ex.Message, false);
+
+            // toggle, close modal
+            // this is altnernative to get result real time, wait for exception, obviously false
+            await Modal.ToggleModalShow(string.Empty, false);
+
+            // just ignore in case some issue where they give bad email
+            throw new Exception(ex.Message);
+        }
+    }
+
+    public void ToggleSubscribeShow()
+        => HideLabel = !HideLabel;
+}
