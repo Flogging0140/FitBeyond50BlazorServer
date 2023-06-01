@@ -17,13 +17,15 @@ namespace BlazorServer2.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // this is setup in sql server and abstracted from my control (i want that here)
             modelBuilder.Entity<IdentityUser>()
             .HasMany<Comment>()
             .WithOne()
             .HasForeignKey(c => c.UserId);
 
+            // this I am directly setting it
             modelBuilder.Entity<BlogPost>()
-                .HasMany<Comment>()
+                .HasMany(b=>b.PostComments)
                 .WithOne()
                 .HasForeignKey(c => c.BlogPostId);
         }

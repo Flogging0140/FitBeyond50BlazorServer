@@ -16,5 +16,7 @@ namespace BlazorServer2.Models
         public string PostAuthor { get; set; } = "Boyd Hanel";
         public DateTime DateCreated { get; set; }
         public DateTime DateModified { get; set; }
+
+        public List<Comment> PostComments { get; set; } = default!;
     }
 }
