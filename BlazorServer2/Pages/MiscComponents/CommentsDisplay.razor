@@ -1,5 +1,65 @@
-﻿<h3>CommentsDisplay</h3>
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models.DTOs;
+@using BlazorServer2.Models;
+@inject ApplicationDbContext _context
+@inject AuthenticationStateProvider _authenticationStateProvider
+@attribute [Authorize(Roles = "Author, RegularUser")]
+
+<div class="align-self-start m-2 p-2">
+    <button style="background:none;border:none;" class="text-center" @onclick="()=>ToggleCommentShow()">
+        <img style="display:block;width:50px;" src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
+    </button>
+</div>
+
+<div class="align-self-center text-center" hidden="@(!HideLabel)">
+    <div class="w-100 p-2 m-2">
+        <CommentInput BlogPostBeingAdded="@BlogPostBeingAdded" />
+
+        <h2>Comments</h2>
+
+        <div>
+            @* here we are displaying them *@
+            @if (CommentsToDisplay is not null)
+            {
+                @foreach (Comment comment in CommentsToDisplay)
+                {
+                    <div class="w-100 text-center">
+                        <h4>@comment.email</h4>
+                        <p>@comment.Text</p>
+                    </div>
+                }
+            }
+            else
+            {
+                <LoadingInline />
+            }
+        </div>
+    </div>
+</div>
+
+@* inform user of if sent successfully *@
+<StatusModal @ref="Modal" />
 
 @code {
+    [Parameter]
+    public BlogPost BlogPostBeingAdded { get; set; } = default!;
 
+    public List<Comment> CommentsToDisplay { get; set; } = default!;
+
+    // for status referencing, calling directly
+    public StatusModal? Modal { get; set; } = default!;
+
+    public bool HideLabel { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        // populate comments
+        CommentsToDisplay = _context.Comments.Where(c=>c.BlogPostId==BlogPostBeingAdded.Id).ToList();
+
+
+        return base.OnInitializedAsync();
+    }
+
+    public void ToggleCommentShow()
+    => HideLabel = !HideLabel;
 }

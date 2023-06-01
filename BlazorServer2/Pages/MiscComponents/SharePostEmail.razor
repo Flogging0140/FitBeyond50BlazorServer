@@ -2,7 +2,12 @@
 @inject BrevoEmailApiHelper _emailSender
 
 <div class="w-100 p-2 m-2">
-    <div class="text-center" hidden="@(!HideLabel)">
+    <div class="align-self-start">
+    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">📨</button>
+
+    </div>
+
+    <div class="text-center align-self-center" hidden="@(!HideLabel)">
         <EditForm Model="EmailAddressDTO" OnValidSubmit="()=>Send(EmailAddressDTO.EmailAddress)">
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -11,7 +16,7 @@
             <button class="btn btn-primary w-100 m-2" type="submit">Email This Post!</button>
         </EditForm>
     </div>
-    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">📨</button>
+    
 </div>
 
 @* inform user of if sent successfully *@

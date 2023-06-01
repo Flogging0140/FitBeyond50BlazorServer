@@ -27,13 +27,15 @@
                     </p>
                 </div>
             </div>
-            <div class="w-100 justify-content-end">
-                <div>
+            <div class="d-flex flex-column-reverse justify-content-center w-100">
+                @* email share *@
+                <div class="w-100">
                     <SharePostEmail HtmlContent="@BlogPostDemo.PostHtmlContent"
                                     HeaderSubject="@BlogPostDemo.PostTitle" />
                 </div>
-                <div>
-                    <CommentInput />
+                @* comment display *@
+                <div class="w-100">
+                    <CommentsDisplay BlogPostBeingAdded="@BlogPostDemo" />
                 </div>
             </div>
         </div>

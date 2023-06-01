@@ -5,8 +5,8 @@
 @inject AuthenticationStateProvider _authenticationStateProvider
 @attribute [Authorize(Roles = "Author, RegularUser")]
 
-<div class="w-100 p-2 m-2">
-    <div class="text-center" hidden="@(!HideLabel)">
+<div class="w-100 text-center p-2 m-2">
+    <div hidden="@(!HideLabel)">
         <EditForm Model="@CommentToAdd" OnValidSubmit="()=>AddComment()">
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -15,8 +15,8 @@
             <button class="btn btn-primary w-100 m-2" type="submit">Add Comment!</button>
         </EditForm>
     </div>
-    <button class="btn mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">
-        <img src="https://em-content.zobj.net/thumbs/120/openmoji/338/speech-balloon_1f4ac.png" />
+    <button class="btn btn-primary w-100 mt-2" style="width:55px;" @onclick="()=>ToggleSubscribeShow()">
+        Comment Input
     </button>
 </div>
 
@@ -24,13 +24,25 @@
 <StatusModal @ref="Modal" />
 
 @code {
-    //[Parameter]
+
+    [Parameter]
+    public BlogPost BlogPostBeingAdded { get; set; } = default!;
+
     public Comment CommentToAdd { get; set; } = new();
 
     // for status referencing, calling directly
     public StatusModal? Modal { get; set; } = default!;
 
     public bool HideLabel { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        // add email to comment
+        var res = (_authenticationStateProvider.GetAuthenticationStateAsync().Result).User;
+        CommentToAdd.email = res.Identity?.Name ?? "Anonymous";
+
+        return base.OnInitializedAsync();
+    }
 
     public async Task AddComment()
     {
@@ -40,10 +52,14 @@
             if (Modal is null)
                 throw new Exception("Modal null");
 
-            // add more details to comment
+            // check for bad words, emogjis
+            string[] words = CommentToAdd.Text.Split(' ');
+            bool badWordFound = await BadWordsHelper.ContainsObscenities(words);
+            if (badWordFound)
+                throw new Exception("Bad words detected");
 
-            var res = (await _authenticationStateProvider.GetAuthenticationStateAsync()).User;
-            CommentToAdd.email = res.Identity?.Name ?? "Anonymous";
+            // add more details to comment
+            
 
             // find user
             var user = _context.Users.Where(u => u.UserName == CommentToAdd.email).FirstOrDefault();
@@ -52,6 +68,7 @@
 
             //
             CommentToAdd.UserId = user.Id;
+            CommentToAdd.BlogPostId = BlogPostBeingAdded.Id;
 
             // Add comment to db
             _context.Comments.Add(CommentToAdd);

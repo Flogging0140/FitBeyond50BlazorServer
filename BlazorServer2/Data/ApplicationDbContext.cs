@@ -21,6 +21,11 @@ namespace BlazorServer2.Data
             .HasMany<Comment>()
             .WithOne()
             .HasForeignKey(c => c.UserId);
+
+            modelBuilder.Entity<BlogPost>()
+                .HasMany<Comment>()
+                .WithOne()
+                .HasForeignKey(c => c.BlogPostId);
         }
 
 
