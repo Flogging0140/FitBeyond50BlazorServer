@@ -50,7 +50,15 @@
 
         //// remove post from page
         //BlogPosts.Remove(blogPost);
-
-        await DeletePostCallback.InvokeAsync(blogPost);
+        try
+        {
+ await DeletePostCallback.InvokeAsync(blogPost);
+        }
+        catch
+        {
+            
+        }
+       
+        
     }
 }

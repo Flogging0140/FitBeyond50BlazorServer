@@ -84,7 +84,7 @@
     public BlogPost PostInProgress { get; set; } = default!;
 
     [Parameter]
-    public EventCallback AddPostCallback { get; set; }
+    public EventCallback<BlogPost> AddPostCallback { get; set; }
 
     public PostSuccess PostSuccessStatus { get; set; }
 
@@ -124,14 +124,14 @@
             postToAdd.DateModified = DateTime.Now;
 
             // add to db
-             _context.BlogPosts.Add(postToAdd);
-            await _context.SaveChangesAsync();
+            //_context.BlogPosts.Add(postToAdd);
+            //await _context.SaveChangesAsync();
 
             // reset the post stuff
             //PostInProgress.PostTitle = default!;
             //PostInProgress.PostHtmlContent = default!;
 
-            await AddPostCallback.InvokeAsync();
+            await AddPostCallback.InvokeAsync(postToAdd);
 
             // new instance of post
             //PostInProgress = new();
