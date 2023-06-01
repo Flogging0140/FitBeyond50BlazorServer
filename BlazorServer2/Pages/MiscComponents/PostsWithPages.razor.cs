@@ -44,8 +44,8 @@ namespace BlazorServer2.Pages.MiscComponents
 
             // order the blog posts
             BlogPosts = OrderOfPosts == PostOrder.newest
-            ? BlogPosts.OrderByDescending(b => b.DateCreated).ToList()
-            : BlogPosts.OrderBy(b => b.DateCreated).ToList();
+            ? BlogPosts.OrderBy(b => b.DateCreated).ToList()
+            : BlogPosts.OrderByDescending(b => b.DateCreated).ToList();
 
             // toggle the displayed posts
             HandleChangePage(1);
