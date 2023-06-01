@@ -27,6 +27,6 @@ namespace BlazorServer2.Data
         public DbSet<BlogPost> BlogPosts { get; set; } = default!;
         public DbSet<Log> Logs { get; set; } = default!;
         public DbSet<Subscriber> Subscribers { get; set; } = default!;
-        public DbSet<Comment> Commments { get; set; } = default!;
+        public DbSet<Comment> Comments { get; set; } = default!;
     }
 }
