@@ -1,5 +1,54 @@
-﻿<h3>CommentsManagement</h3>
+﻿@using BlazorServer2.Data;
+@using BlazorServer2.Models;
+@using Microsoft.EntityFrameworkCore;
+@attribute [Authorize(Roles = "Author")]
+@inject ApplicationDbContext _context
+
+<div class="d-flex justify-content-center w-100">
+    <div class="row w-100">
+        <div class="container">
+            @if (CommentsToManage == null)
+            {
+                <LoadingInline />
+            }
+            else
+            {
+                <h2>Delete Comments</h2>
+                <small>Edit coming soon</small>
+                @foreach (Comment comment in CommentsToManage)
+                {
+                    @* TODO: in future add feature to ban user and email *@
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">@comment.email</h5>
+                            <button class="btn btn-danger" @onclick="(() => DeleteComment(comment))">Delete Comment</button>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
 
 @code {
+    public List<Comment> CommentsToManage { get; set; } = default!;
 
+    [Parameter]
+    public EventCallback<int> DeleteCommentCallback { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        // get posts from db
+        //CommentsToManage = await _context.Comments.ToListAsync().Result;
+        var task = Task.Run(async () => await _context.Comments.ToListAsync());
+        CommentsToManage = task.Result;
+
+        return base.OnInitializedAsync();
+    }
+
+    private async Task DeleteComment(Comment comment)
+    {
+        CommentsToManage.Remove(comment);
+        await DeleteCommentCallback.InvokeAsync(comment.Id);
+    }
 }

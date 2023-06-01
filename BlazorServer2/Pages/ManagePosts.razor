@@ -40,6 +40,10 @@
 
 <EditPosts BlogPosts="BlogPosts" DeletePostCallback="RemovePost" />
 
+<br />
+
+<CommentsManagement DeleteCommentCallback="@RemoveComment" />
+
 @code {
     [Parameter]
     public BlogPost PostInProgress { get; set; } = new();
@@ -127,5 +131,19 @@
 
         // clear whatever
         PostInProgress = new();
+    }
+
+    private void RemoveComment(int commentId)
+    {
+        Comment? commentToDelete = _context.Comments.ToList().Where(c => c.Id == commentId).FirstOrDefault();
+
+        // skip if we can't find
+        if (commentToDelete == null)
+            return;
+
+        // remove
+        _context.Comments.Remove(commentToDelete);
+        _context.SaveChanges();
+        StateHasChanged();
     }
 }
