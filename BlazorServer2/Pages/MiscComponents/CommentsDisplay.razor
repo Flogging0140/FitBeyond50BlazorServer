@@ -51,6 +51,7 @@
 
     public bool HideLabel { get; set; }
 
+    // for getting values on component init
     protected override Task OnInitializedAsync()
     {
         // populate comments
@@ -63,15 +64,22 @@
     // add comment and refresh
     public void AddComment(Comment comment)
     {
+        // just to silence underline
         if (Modal is null)
             throw new Exception("Modal null");
         
+        // add to current display
         CommentsToDisplay.Add(comment);
+
+        // add to db, save 
         _context.Comments.Add(comment);
         int commentAddResult = _context.SaveChanges();
+
+        // reset UI component
         StateHasChanged();
     }
 
+    // hide and show div on btn click
     public void ToggleCommentShow()
     => HideLabel = !HideLabel;
 }
