@@ -54,8 +54,7 @@
 
             // check for bad words, emogjis
             string[] words = CommentToAdd.Text.Split(' ');
-            bool badWordFound = await BadWordsHelper.ContainsObscenities(words);
-            if (badWordFound)
+            if (BadWordsHelper.ContainsObscenities(words))
                 throw new Exception("Bad words detected");
 
             // add more details to comment

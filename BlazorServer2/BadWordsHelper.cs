@@ -9,7 +9,7 @@ namespace BlazorServer2
 
         private static string BadEmojis { get; } = "​🖕​🤬​ ​🖕​🤬​🖕​ ✊🍆 ✊🍆💦 ✊🍌 ✊🍌💦 🍆🍑💦 🍆👅💦 🍆👋💦 🍆💦 🐓💍 👉🌮 👉👌 👌👈 👐🍅🍅 🖕 🤩🍆💦 🤬​🖕";
 
-        public static async Task<bool> ContainsObscenities(params string[] words)
+        public static bool ContainsObscenities(params string[] words)
         {
             // check if each word in message is in the list of bad words
             foreach (string word in words)
