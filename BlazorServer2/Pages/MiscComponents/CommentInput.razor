@@ -5,6 +5,7 @@
 @inject AuthenticationStateProvider _authenticationStateProvider
 @attribute [Authorize(Roles = "Author, RegularUser")]
 
+@* shows edit form to create comment *@
 <div class="w-100 text-center p-2 m-2">
     <div hidden="@(!HideLabel)">
         <EditForm Model="@CommentToAdd" OnValidSubmit="()=>AddComment()">
@@ -28,6 +29,7 @@
     [Parameter]
     public BlogPost BlogPostBeingAdded { get; set; } = default!;
 
+    // for the method call in parent component
     [Parameter]
     public EventCallback<Comment> AddCommentCallback { get; set; }
 
@@ -38,6 +40,7 @@
 
     public bool HideLabel { get; set; }
 
+    // populate some values on component start
     protected override Task OnInitializedAsync()
     {
         // add email to comment
@@ -59,16 +62,16 @@
             if (BadWordsHelper.ContainsObscenities(CommentToAdd.Text.Split(' ')))
                 throw new Exception("Bad words detected");
 
-            // find user
+            // get commenters id for obj
             var user = _context.Users.Where(u => u.UserName == CommentToAdd.email).FirstOrDefault();
             if (user == null)
                 throw new Exception("User not found");
 
-            //
+            // add user id, blog id for relations
             CommentToAdd.UserId = user.Id;
             CommentToAdd.BlogPostId = BlogPostBeingAdded.Id;
 
-            //
+            // add comment to component and db, refresh
             await AddCommentCallback.InvokeAsync(CommentToAdd);
 
             // toggle, opem modal
@@ -77,7 +80,7 @@
             // toggle, close modal
             await Modal.ToggleModalShow(string.Empty, true);
 
-            //
+            // reset obj or tries insert duplcate, add logged in users email
             CommentToAdd = new()
             {
                 email = (_authenticationStateProvider.GetAuthenticationStateAsync().Result).User.Identity.Name ?? "Anonymous"
@@ -85,13 +88,14 @@
         }
         catch (Exception ex)
         {
+            // just to silence underline
             if (Modal is null)
                 throw new Exception("Modal null");
 
+            // toggle, open modal, show error
             await Modal.ToggleModalShow(ex.Message, false);
 
             // toggle, close modal
-            // this is altnernative to get result real time, wait for exception, obviously false
             await Modal.ToggleModalShow(string.Empty, false);
 
             // just ignore in case some issue where they give bad email
@@ -99,6 +103,7 @@
         }
     }
 
+    // hide and show div on btn click
     public void ToggleSubscribeShow()
         => HideLabel = !HideLabel;
 }
