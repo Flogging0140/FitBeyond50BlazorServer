@@ -1,18 +1,34 @@
 ﻿@using BlazorServer2.Models;
 
-<div class="d-flex flex-row justify-content-center text-center">
-    @* loop through display range, create page options *@
-    @for (int p = 1; p <= displayRange; p++)
-    {
-        int pageId = p;
-        <button class="btn btn-primary" type="button" @onclick="(() => HandleChangePage(pageId))">@p</button>
-    }
+@* top bar with btn, pagination, page number *@
+
+<div class="row">
+    <div class="col-sm-4 d-flex justify-content-center align-items-center text-center">
+        <div class="w-50">
+            <button class="btn btn-primary w-100 p-2 m-2" @onclick="@TogglePostOrder">
+                @OrderOfPosts <small>(Current)</small>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-4 justify-content-center align-items-center text-center">
+        <div class="d-flex flex-row justify-content-center text-center">
+            @* loop through display range, create page options *@
+            @for (int p = 1; p <= displayRange; p++)
+            {
+                int pageId = p;
+                <button class="btn btn-primary m-2" type="button" @onclick="(() => HandleChangePage(pageId))">@p</button>
+            }
+        </div>
+    </div>
+    <div class="col-sm-4 justify-content-center align-items-center text-end">
+        @* display page number *@
+        <div class="p-4 m-4">
+            <h1><small>page:</small> @pageNumber</h1>
+        </div>
+    </div>
 </div>
 
-@* display page number *@
-<div class="text-end p-4 m-4">
-    <h1>@pageNumber</h1>
-</div>
+
 
 @* display the posts in range *@
 @if (PostsToDisplay != null)
@@ -35,6 +51,14 @@ else
     // Posts we are displaying
     public List<BlogPost> PostsToDisplay { get; set; } = default!;
 
+    // for sorting posts
+    public PostOrder OrderOfPosts { get; set; } = PostOrder.asc;
+    public enum PostOrder
+    {
+        asc,
+        desc
+    }
+
     // change how many we want to show here, etc
     // TODO: could let user decide how many per page!
     private int pageSize = 3;
@@ -50,6 +74,20 @@ else
         displayRange = Convert.ToInt32(Math.Ceiling(BlogPosts.Count() / Convert.ToDecimal(pageSize)));
 
         base.OnInitialized();
+    }
+
+    public void TogglePostOrder()
+    {
+        // toggle the sort order
+        OrderOfPosts = OrderOfPosts == PostOrder.asc ? OrderOfPosts = PostOrder.desc : OrderOfPosts = PostOrder.asc;
+
+        // order the blog posts
+        BlogPosts = OrderOfPosts == PostOrder.desc
+        ? BlogPosts.OrderByDescending(b => b.DateCreated).ToList()
+        : BlogPosts.OrderBy(b => b.DateCreated).ToList();
+
+        // toggle the displayed posts
+        HandleChangePage(1);
     }
 
     // change what page shows
@@ -73,7 +111,7 @@ else
 
     Example:
 
-        6
+    6
 
     In Blazor you have full control over your DOM. As You are using EF so you can simply perform Skip and Take for your paging :
 
@@ -108,13 +146,13 @@ else
     9211010 silver badges1818 bronze badges
     1
     I'm not sure why this happens to me, but passing p to HandleChangePage is always the fully incremented value. I have to assign a new int and pass it in order to fix this issue, like so: int pageId = p; @onclick(() => HandleChangePage(pageId)) –
-    GeorgiG
+     GeorgiG
      Jun 10, 2021 at 11:34
     @GeorgiG See also github.com/dotnet/aspnetcore/issues/10138 –
-    Stef Heyenrath
+     Stef Heyenrath
      Aug 24, 2021 at 22:14
     Also instead of list.Count() / pageSize, you should use Convert.ToInt32(Math.Ceiling(list.Count() / Convert.ToDecimal(pageSize))) –
-    Stef Heyenrath
+     Stef Heyenrath
      Aug 24, 2021 at 22:17
 
     */
