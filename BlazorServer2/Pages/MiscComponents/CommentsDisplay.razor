@@ -24,8 +24,8 @@
                 @foreach (Comment comment in CommentsToDisplay)
                 {
                     <div class="w-100 text-center">
-                        <h6>@comment.email said:</h6>
-                        <p>@comment.Text</p>
+                        <h5>@comment.email said:</h5>
+                        <p><small>@comment.Text</small></p>
                     </div>
                 }
             }
