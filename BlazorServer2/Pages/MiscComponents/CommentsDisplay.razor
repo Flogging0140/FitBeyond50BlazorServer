@@ -13,7 +13,7 @@
 
 <div class="align-self-center text-center" hidden="@(!HideLabel)">
     <div class="w-100 p-1 m-1">
-        <CommentInput BlogPostBeingAdded="@BlogPostBeingAdded" />
+        <CommentInput BlogPostBeingAdded="@BlogPostBeingAdded" AddCommentCallback="@AddComment" />
 
         <h2>Comments</h2>
 
@@ -54,10 +54,33 @@
     protected override Task OnInitializedAsync()
     {
         // populate comments
-        CommentsToDisplay = _context.Comments.Where(c=>c.BlogPostId==BlogPostBeingAdded.Id).ToList();
+        CommentsToDisplay = _context.Comments.Where(c => c.BlogPostId == BlogPostBeingAdded.Id).ToList();
 
 
         return base.OnInitializedAsync();
+    }
+
+    // add comment and refresh
+    public void AddComment(Comment comment)
+    {
+        //Comment? comment = _context.Comments.Where(c => c.Id == comment).FirstOrDefault();
+        //if (comment is null)
+        //    return;
+
+        // just to silence underline
+        if (Modal is null)
+            throw new Exception("Modal null");
+        
+        CommentsToDisplay.Add(comment);
+        _context.Comments.Add(comment);
+        int commentAddResult = _context.SaveChanges();
+        StateHasChanged();
+
+        // Open Modal
+        Task.Run(async () => await Modal.ToggleModalShow(commentAddResult > 0 ? "Comment Added" : "Issue Adding", commentAddResult > 0));
+
+        // Close Modal
+        //Task.Run(async () => await Modal.ToggleModalShow("Trying...", true));
     }
 
     public void ToggleCommentShow()

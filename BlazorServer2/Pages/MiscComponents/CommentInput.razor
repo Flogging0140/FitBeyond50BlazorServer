@@ -28,6 +28,9 @@
     [Parameter]
     public BlogPost BlogPostBeingAdded { get; set; } = default!;
 
+    [Parameter]
+    public EventCallback<Comment> AddCommentCallback { get; set; }
+
     public Comment CommentToAdd { get; set; } = new();
 
     // for status referencing, calling directly
@@ -69,15 +72,25 @@
             CommentToAdd.UserId = user.Id;
             CommentToAdd.BlogPostId = BlogPostBeingAdded.Id;
 
+            //
+            await AddCommentCallback.InvokeAsync(CommentToAdd);
+
             // Add comment to db
-            _context.Comments.Add(CommentToAdd);
-            int commentAddResult = await _context.SaveChangesAsync();
+            //_context.Comments.Add(CommentToAdd);
+            //int commentAddResult = await _context.SaveChangesAsync();
 
             // toggle, decide result if more than 0 added to db, open modal
-            await Modal.ToggleModalShow(commentAddResult > 0 ? "Comment Added" : "Issue Adding", commentAddResult > 0);
+            //await Modal.ToggleModalShow(commentAddResult > 0 ? "Comment Added" : "Issue Adding", commentAddResult > 0);
+            //await Modal.ToggleModalShow("Added comment", true);
 
             // toggle, close modal
-            await Modal.ToggleModalShow(string.Empty, true);
+            //await Modal.ToggleModalShow(string.Empty, true);
+
+            //
+            CommentToAdd = new()
+            {
+                    email = (_authenticationStateProvider.GetAuthenticationStateAsync().Result).User.Identity.Name ?? "Anonymous"
+            };
         }
         catch (Exception ex)
         {
