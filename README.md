@@ -1,22 +1,24 @@
+
 ![enter image description here](https://media.discordapp.net/attachments/1113972876425576454/1113973603663347783/image.png?width=1048&height=313)
 
 # FitBeyond50 Blog
-[project live here fitbeyond50.ca](https://fitbeyond50.ca/)
+[Project here fitbeyond50.ca](https://fitbeyond50.ca/)
 
 ## Overview
 
-My dad wanted a blog. As practice and just for fun I decided to look into Blazor Server. I spent a bit of time comparing the Web Assembly version and server but chose server for simple DB access. The project took about 6 days to complete. 
+My dads hobby is fitness blogging. I decided to create a dynamic blogging application on the web, where he could use html to format his posts, then upload and manage them without me. 
+Part of this project was expanding my C# skills to Blazor. I am comfortable with C#, this is my first Blazor project, and has been a positive demonstration of my ability to learn. The project took about 6 days to complete. 
 
 ## Highlights
 
-- Azure was used to host the app service
-- Rebel gave it a unique domain name
-- Continuous deployment from GitHub (master) to Azure
-- Passwords are stored on server as env variables and not hard coded
+- Hosted on Azure
+- Domain name from Rebel
+- Continuous deployment from GitHub
+- Passwords stored as env variables
 - Swear word + emoji filtering on comments
--  Pagination, 3 posts per page
+- Pagination
 - Upload Blog Posts as HTML5 with inline CSS3
-- Data is stored in cloud
+- Using SQL server, FluidAPI with navigation properties
 - Users can subscribe to email list
 - Share posts via email
 - Optimized for mobile 
@@ -38,7 +40,7 @@ In this video I walk through the project with brevity, not being to technical. i
 
 ## Learning During Project
 
-Some highlights of what I learned are as follows. This was a great learning experience. I plan to try the Web Assembly version of Blazor next. 
+Some highlights of what I learned are as follows. I plan to try the Web Assembly version of Blazor next. 
 
 - Blazor Server
 	- Authentication, Authorization
