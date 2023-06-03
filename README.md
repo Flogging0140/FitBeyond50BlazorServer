@@ -40,6 +40,8 @@ In this video I walk through the project with brevity, not being to technical. i
 
 [![](https://markdown-videos.deta.dev/youtube/8jcfhJ3k63w)](https://youtu.be/8jcfhJ3k63w)
 
+[YT Proj Demo](https://youtu.be/8jcfhJ3k63w)
+
 ## Learning During Project
 
 Some highlights of what I learned are as follows. I plan to try the Web Assembly version of Blazor next. 
