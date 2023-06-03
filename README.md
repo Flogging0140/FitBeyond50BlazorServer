@@ -9,6 +9,8 @@
 My dads hobby is fitness blogging. I decided to create a dynamic blogging application on the web, where he could use html to format his posts, then upload and manage them without me. 
 Part of this project was expanding my C# skills to Blazor. I am comfortable with C#, this is my first Blazor project, and has been a positive demonstration of my ability to learn. The project took about 6 days to complete. 
 
+Note: Can take up to 30 seconds to load website. 
+
 ## Highlights
 
 - Hosted on Azure
