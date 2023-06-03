@@ -36,7 +36,7 @@ _Note: Can take up to 30 seconds to load website._
 
 ## Video Demo
 
-In this video I walk through the project with brevity, not being to technical. in ~10mins I demonstrate the features of this dynamic web application. 
+In this video I walk through the project with brevity, not being to technical. in ~10mins I demonstrate the features of this dynamic web application. _I made video with Kden-Live + Obs._
 
 [![](https://markdown-videos.deta.dev/youtube/8jcfhJ3k63w)](https://youtu.be/8jcfhJ3k63w)
 
