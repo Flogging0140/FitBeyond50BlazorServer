@@ -45,7 +45,7 @@
     </div>
 </dialog>
 
-<div class="d-flex justify-content-center w-100">
+<div class="d-flex justify-content-center w-100" style="height:70vh;">
     <div class="row w-100">
         <div class="container">
             <h2>Edit Blog Post</h2>
@@ -57,10 +57,10 @@
                     <InputText id="name" class="form-control m-2 rounded-4" placeholder="Title" @bind-Value="PostInProgress.PostTitle" />
                 </div>
 
-                <div class="input-group">
-                    <InputTextArea cols="40" rows="5"
+                <div class="input-group" style="height:auto;max-height:90vh;">
+                    <InputTextArea cols="50" rows="5"
                                    id="content"
-                                   class="form-control m-2 rounded-4 w-100 h-25"
+                                   class="form-control m-2 rounded-4 w-100"
                                    placeholder="Html Content"
                                    @bind-Value="PostInProgress.PostHtmlContent">
                     </InputTextArea>
@@ -116,20 +116,10 @@
             BlogPost postToAdd = new()
             {
                 PostTitle = PostInProgress.PostTitle,
-                PostHtmlContent = PostInProgress.PostHtmlContent
+                PostHtmlContent = PostInProgress.PostHtmlContent,
+                DateCreated = DateTime.Now,
+                DateModified = DateTime.Now
             };
-
-            // set date
-            postToAdd.DateCreated = DateTime.Now;
-            postToAdd.DateModified = DateTime.Now;
-
-            // add to db
-            //_context.BlogPosts.Add(postToAdd);
-            //await _context.SaveChangesAsync();
-
-            // reset the post stuff
-            //PostInProgress.PostTitle = default!;
-            //PostInProgress.PostHtmlContent = default!;
 
             await AddPostCallback.InvokeAsync(postToAdd);
 

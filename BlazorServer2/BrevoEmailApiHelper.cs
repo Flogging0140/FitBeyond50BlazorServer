@@ -43,7 +43,7 @@ namespace BlazorServer2
             else if (emailType == EmailType.postNotification)
             {
                 message = GetNotificationHtml(subject);
-                subject = "Sharing Post, FitBeyond50";
+                subject = "Notification of Post, FitBeyond50";
             }
 
             // create message

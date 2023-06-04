@@ -78,7 +78,7 @@
         try
         {
             // add to db
-            _context.BlogPosts.Add(PostInProgress);
+            _context.BlogPosts.Add(postInProgress);
             await _context.SaveChangesAsync();
 
             // notify subscribers
