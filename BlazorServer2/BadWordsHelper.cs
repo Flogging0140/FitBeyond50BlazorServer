@@ -11,17 +11,21 @@ namespace BlazorServer2
 
         public static bool ContainsObscenities(params string[] words)
         {
-            // check if each word in message is in the list of bad words
+            // Null, empty check
+            if (words == null || words.Length < 1)
+                return false;
+
+            // Check if each word in message is in the list of bad words
             foreach (string word in words)
             {
-                // checking bad words
-                if(BadWords.Split(",").Contains(word))
+                // Checking bad words
+                if (BadWords.Split(",").Contains(word.ToLower()))
                 {
                     return true;
                 }
 
-                // checking emojis
-                if(BadEmojis.Split(",").Contains(word))
+                // Checking emojis
+                if (BadEmojis.Split(",").Contains(word))
                 {
                     return true;
                 }
