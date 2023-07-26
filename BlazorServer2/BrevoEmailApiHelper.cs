@@ -87,18 +87,18 @@ namespace BlazorServer2
         private static string GetUnSubscribedHtml()
              => ReadoutHtml()
             .Replace("TEXT_HERE", "You've been unsubscribed; hope to meet again soon!")
-            .Replace("HEADER_HERE", "Unsubscribed from FitBeyond50.ca");
+            .Replace("HEADER_HERE", "Unsubscribed from FitBeyond50");
 
         // get html for subscribed person (TODO: add their email to database in new table)
         private static string GetSubscribedHtml()
             => ReadoutHtml()
             .Replace("TEXT_HERE", "You have Subscribed! 🥳")
-            .Replace("HEADER_HERE", "Subscribed to FitBeyond50.ca");
+            .Replace("HEADER_HERE", "Subscribed to FitBeyond50");
 
         // get html email template, 
         private static string GetNotificationHtml(string subjectHeader)
             => ReadoutHtml()
             .Replace("TEXT_HERE", $"A new post has been released! {subjectHeader}, <a href=\"https://fitbeyond50.ca\" rel=\"noopener\" style=\"text-decoration:underline;color:#d79c60\" target=\"_blank\">Checkout FitBeyond50!</a>")
-            .Replace("HEADER_HERE", "Post update, FitBeyond50.ca");
+            .Replace("HEADER_HERE", "Post update, FitBeyond50");
     }
 }
