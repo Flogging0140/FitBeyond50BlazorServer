@@ -21,7 +21,16 @@ $body-font: 'Nanum Myeongjo', serif;
 
 html,
 body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+    // Remove scrollbar?
+    ::-webkit-scrollbar {
+        display: none;
+    }
+
+    font-family: 'Helvetica Neue',
+    Helvetica,
+    Arial,
+    sans-serif;
     background: $back-gradient;
 
     h1,
