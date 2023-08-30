@@ -55,17 +55,19 @@ body {
     }
 
     a {
-        text-decoration: none;
+        text-decoration: underline;
         color: $primary;
 
         &:hover {
             text-decoration: underline;
             color: $primary;
+            font-style: italic;
         }
 
         &:focus {
             text-decoration: underline;
             color: $primary;
+            font-style: italic;
         }
     }
 
@@ -132,9 +134,9 @@ body {
                 margin: 2%;
                 padding: 2% 5%;
 
-                &:hover {
+                /* &:hover {
                     text-decoration: underline;
-                }
+                } */
             }
         }
     }
