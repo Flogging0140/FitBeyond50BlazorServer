@@ -103,7 +103,7 @@
         if (string.IsNullOrEmpty(postTitle)) return;
 
         BrevoEmailApiHelper emailApiHelper = new();
-        emailApiHelper.SendEmailAsync("bhanel@gmail.com", "Comment notification", $"{comment.email} left comment on {postTitle}", BrevoEmailApiHelper.EmailType.commentNotification);
+        emailApiHelper.SendEmailAsync("bhanel@gmail.com", "Comment notification", $"{comment.email} left comment on {postTitle}. Comment: {comment.Text}", BrevoEmailApiHelper.EmailType.commentNotification);
     }
 
     // hide and show div on btn click
