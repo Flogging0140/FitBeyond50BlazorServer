@@ -90,8 +90,20 @@
         _context.Comments.Add(comment);
         int commentAddResult = _context.SaveChanges();
 
+        // Email dad
+        NotifyDad(comment);
+
         // reset UI component
         StateHasChanged();
+    }
+
+    private void NotifyDad(Comment comment)
+    {
+        string? postTitle = _context.BlogPosts.FirstOrDefault(bp => bp.Id == comment.BlogPostId)?.PostTitle;
+        if (string.IsNullOrEmpty(postTitle)) return;
+
+        BrevoEmailApiHelper emailApiHelper = new();
+        emailApiHelper.SendEmailAsync("bhanel@gmail.com", "Comment notification", $"{comment.email} left comment on {postTitle}", BrevoEmailApiHelper.EmailType.commentNotification);
     }
 
     // hide and show div on btn click

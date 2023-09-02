@@ -28,7 +28,6 @@
 </div>
 
 
-
 @* display the posts in range *@
 @if (PostsToDisplay != null)
 {
@@ -42,3 +41,31 @@ else
     <LoadingInline />
 }
 
+
+@* bottom bar, same as top, bottom is only difference *@
+@* TODO: come back when time and make component *@
+<div class="row">
+    <div class="col-sm-4 d-flex justify-content-center align-items-center text-center">
+        <div class="w-50">
+            <button class="btn btn-primary w-100 p-2 m-2" @onclick="@TogglePostOrder">
+                @OrderOfPosts <small>👈 choose</small>
+            </button>
+        </div>
+    </div>
+    <div class="col-sm-4 justify-content-center align-items-center text-center">
+        <div style="flex-wrap:wrap;" class="d-flex flex-row justify-content-center text-center">
+            @* loop through display range, create page options *@
+            @for (int p = 1; p <= displayRange; p++)
+            {
+                int pageId = p;
+                <button class="btn btn-primary m-2" type="button" @onclick="(() => HandleChangePage(pageId))">@p</button>
+            }
+        </div>
+    </div>
+    <div class="col-sm-4 justify-content-center align-items-center text-end">
+        @* display page number *@
+        <div class="p-4 m-4">
+            <h1><small>page:</small> @pageNumber</h1>
+        </div>
+    </div>
+</div>

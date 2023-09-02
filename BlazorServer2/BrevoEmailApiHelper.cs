@@ -14,7 +14,8 @@ namespace BlazorServer2
             subscribe,
             unsubscribe,
             sharePost,
-            postNotification
+            postNotification,
+            commentNotification
         }
 
         // send email, flexibility
@@ -44,6 +45,10 @@ namespace BlazorServer2
             {
                 message = GetNotificationHtml(subject);
                 subject = "Notification of Post, FitBeyond50";
+            }
+            else if(emailType == EmailType.commentNotification)
+            {
+
             }
 
             // create message
