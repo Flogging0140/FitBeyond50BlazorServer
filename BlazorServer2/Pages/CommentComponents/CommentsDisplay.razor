@@ -2,6 +2,7 @@
 @using BlazorServer2.Models.DTOs;
 @using BlazorServer2.Models;
 @using BlazorServer2.Pages.MiscComponents;
+@using System.Security.Claims;
 @inject ApplicationDbContext _context
 @inject AuthenticationStateProvider _authenticationStateProvider
 @attribute [Authorize(Roles = "Author, RegularUser")]
@@ -25,7 +26,14 @@
                 @foreach (Comment comment in BlogPostBeingAdded.PostComments)
                 {
                     <div class="w-100 text-center">
-                        <h5>@comment.email said:</h5>
+                        @if (user.IsInRole("Author"))
+                        {
+                            <h5>@comment.email said:</h5>
+                        }
+                        else
+                        {
+                            <h5>user said:</h5>
+                        }
                         <p><small>@comment.Text</small></p>
                     </div>
                 }
@@ -42,6 +50,7 @@
 <StatusModal @ref="Modal" />
 
 @code {
+
     [Parameter]
     public BlogPost BlogPostBeingAdded { get; set; } = default!;
 
@@ -52,14 +61,18 @@
 
     public bool HideLabel { get; set; }
 
+    public ClaimsPrincipal user { get; set; } = default!;
+
     // for getting values on component init
-    protected override Task OnInitializedAsync()
+    protected override async Task OnInitializedAsync()
     {
         // populate comments
         //CommentsToDisplay = _context.Comments.Where(c => c.BlogPostId == BlogPostBeingAdded.Id).ToList();
 
+        var authState = await _authenticationStateProvider.GetAuthenticationStateAsync();
+        user = authState.User;
 
-        return base.OnInitializedAsync();
+        //return base.OnInitializedAsync();
     }
 
     // add comment and refresh
@@ -73,7 +86,7 @@
         //CommentsToDisplay.Add(comment);
         BlogPostBeingAdded.PostComments.Add(comment);
 
-        // add to db, save 
+        // add to db, save
         _context.Comments.Add(comment);
         int commentAddResult = _context.SaveChanges();
 
