@@ -12039,7 +12039,6 @@ body .img-header-container .credit-link {
 }
 html .blog-post,
 body .blog-post {
-  padding: 2% 5%;
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
@@ -12047,10 +12046,10 @@ body .blog-post {
   align-items: center;
   width: 100%;
   height: 100%;
-  border-color: #333333;
+  /* border-color: $dark;
   border-width: 1px;
-  border-style: solid;
-  border-radius: 10px;
+  border-style: solid; */
+  border-radius: 5px;
 }
 html .blog-post .txt,
 body .blog-post .txt {
